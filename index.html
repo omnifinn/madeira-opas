@@ -1915,6 +1915,28 @@ const PLACES = [
     pkgs: ['B'],
   },
   {
+    id: 'cabo-girao',
+    name: 'Cabo Girão (skywalk)',
+    pt: 'Cabo Girão',
+    type: 'viewpoint',
+    lat: 32.6535, lon: -17.0058,
+    desc: 'Euroopan korkein meren yläpuolinen kallioparveke (580 m). Lasilattia jonka läpi katsoo suoraan alas Câmara de Lobosin viinitarhoille ja merelle. Helppo pysähdys länsireissulla, ei vaadi kävelyä.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 30, durationText: '30 min',
+    driveMin: 20, driveKm: 17,
+    bestTime: 'aamu (ennen klo 10 vältät turistibussit)',
+    bestSeason: 'läpi vuoden — kirkas sää parantaa näkymää',
+    parking: 'iso ilmainen parkki vieressä',
+    tips: [
+      'Käy lasilattialla — Euroopan korkein skywalk',
+      'Yhdistä Câmara de Lobosin kalastajakylään (Ronaldon kotiseutu, 5 min ajaa)',
+      'Köysirata alas Fajã dos Padresille jos haluat lisäelämystä (10 € meno-paluu)',
+      'Skywalk on ilmainen — älä kuuntele lähitarjoajia'
+    ],
+    warnings: ['Korkeanpaikankammoiselle ahdistava', 'Ruuhkainen klo 11–14 turistibussien aikaan'],
+    pkgs: ['A', 'C'],
+  },
+  {
     id: 'ponta-do-sol',
     name: 'Ponta do Sol',
     pt: 'Ponta do Sol',
@@ -2086,13 +2108,14 @@ const PACKAGES = {
       {
         n: 2, date: 'Su 31.5.', title: 'Länsi-Madeira',
         stops: [
-          { t: 'Klo 9', id: 'ponta-do-sol', note: 'Aamiainen Ponta do Solin rantapromenadilla.' },
-          { t: 'Klo 11', id: 'cascata-anjos', note: 'Lyhyt pysähdys vesiputouksella.' },
-          { t: 'Klo 13', id: 'porto-moniz', note: 'Lounas Porto Mozissa + uintia luonnonaltaissa.' },
-          { t: 'Klo 16', id: 'veu-da-noiva', note: 'Paluumatkalla nopea pysähdys.' },
+          { t: 'Klo 9', id: 'cabo-girao', note: 'Aamukäynti skywalkille ennen turistibusseja.' },
+          { t: 'Klo 10', id: 'ponta-do-sol', note: 'Aamiainen Ponta do Solin rantapromenadilla.' },
+          { t: 'Klo 12', id: 'cascata-anjos', note: 'Lyhyt pysähdys vesiputouksella.' },
+          { t: 'Klo 14', id: 'porto-moniz', note: 'Lounas Porto Mozissa + uintia luonnonaltaissa.' },
+          { t: 'Klo 17', id: 'veu-da-noiva', note: 'Paluumatkalla nopea pysähdys.' },
         ],
         notes: 'Paluu Funchaliin VR1-tietä (1,5 h). Illallinen Lidolla.',
-        stats: { drive: '~125 km', hike: '1 km', energy: 'medium' }
+        stats: { drive: '~135 km', hike: '1 km', energy: 'medium' }
       },
       {
         n: 3, date: 'Ma 1.6.', title: 'Auringonnousu vuorella + Monte',
@@ -2253,12 +2276,13 @@ const PACKAGES = {
       {
         n: 4, date: 'Ti 2.6.', title: 'Länsi-Madeira ajellen',
         stops: [
-          { t: 'Klo 10', id: 'ponta-do-sol', note: 'Aamukahvi Madeiran aurinkoisimmassa kylässä.' },
-          { t: 'Klo 12', id: 'cascata-anjos', note: 'Pikapysähdys.' },
-          { t: 'Klo 14', id: 'porto-moniz', note: 'Lounas + altaat.' },
+          { t: 'Klo 10', id: 'cabo-girao', note: 'Skywalk — Euroopan korkein meren yläpuolinen parveke.' },
+          { t: 'Klo 11', id: 'ponta-do-sol', note: 'Aamukahvi Madeiran aurinkoisimmassa kylässä.' },
+          { t: 'Klo 13', id: 'cascata-anjos', note: 'Pikapysähdys.' },
+          { t: 'Klo 15', id: 'porto-moniz', note: 'Lounas + altaat.' },
         ],
         notes: 'Lounasvaihtoehto: Aqua Natura Bay Hotelin terassi Porto Mozissa.',
-        stats: { drive: '~120 km', hike: '0,5 km', energy: 'chill' }
+        stats: { drive: '~130 km', hike: '0,5 km', energy: 'chill' }
       },
       {
         n: 5, date: 'Ke 3.6.', title: 'Pohjoisrannikko maisemoiden',
@@ -2887,8 +2911,9 @@ function drawRoute(latlngs, color, day, route) {
   const duration = route ? `${Math.round(route.duration/60)} min ajoa` : '';
   line.bindPopup(`
     <div class="popup-title">Päivä ${day.n}: ${day.title}</div>
-    <div class="popup-meta">${day.date} · ${distance} · ${duration}</div>
-    <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">${day.stops.length} pysähdystä</div>
+    <div class="popup-meta">${day.date}${distance ? ' · ' + distance : ''}${duration ? ' · ' + duration : ''}</div>
+    <div style="font-size: 12px; color: var(--text-2); margin: 4px 0 8px;">${day.stops.length} pysähdystä</div>
+    <a class="popup-link" data-day-open="${day.n}">Avaa päivän tiedot →</a>
   `);
 }
 
@@ -3039,12 +3064,27 @@ function init() {
     });
   });
 
-  // Day stops delegation
+  // Day stops & popup links delegation
   document.addEventListener('click', e => {
     const stop = e.target.closest('.day-stop');
     if (stop) openPanel(stop.dataset.id);
     const popupLink = e.target.closest('[data-popup-id]');
     if (popupLink) openPanel(popupLink.dataset.popupId);
+    const dayOpen = e.target.closest('[data-day-open]');
+    if (dayOpen) {
+      // route click → switch to days view, set pkg from current filter, scroll to day
+      const dayN = parseInt(dayOpen.dataset.dayOpen, 10);
+      if (['A','B','C'].includes(state.filter)) {
+        state.pkg = state.filter;
+        $$('.pkg-tab').forEach(x => x.setAttribute('aria-pressed', x.dataset.pkg === state.pkg));
+      }
+      showView('days');
+      setTimeout(() => {
+        const cards = $$('.day-card');
+        const target = cards[dayN - 1];
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    }
   });
 
   // System theme change

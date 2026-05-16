@@ -1,11 +1,11 @@
 // Madeira-opas service worker
 // Cache-first strategy with network fallback for offline support
-const CACHE = 'madeira-v3';
+const CACHE = 'madeira-v4';
 const PLACE_IDS = [
   'funchal-old','monte-palace','pico-arieiro','pico-ruivo','porto-moniz',
   'seixal','veu-da-noiva','fanal','25-fontes','santana','rocha-navio',
-  'sao-vicente','boaventura','ponta-do-sol','cascata-anjos','lombinho',
-  'risco','dolphins','doca-cavacas','praia-formosa'
+  'aguage','sao-vicente','boaventura','ponta-do-sol','cascata-anjos',
+  'lombinho','risco','dolphins','doca-cavacas','praia-formosa','cabo-girao'
 ];
 const ASSETS = [
   './',
