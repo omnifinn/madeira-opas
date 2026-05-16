@@ -1,6 +1,6 @@
 // Madeira-opas service worker
 // Cache-first strategy with network fallback for offline support
-const CACHE = 'madeira-v1';
+const CACHE = 'madeira-v2';
 const ASSETS = [
   './',
   './index.html',
