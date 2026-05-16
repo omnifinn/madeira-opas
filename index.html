@@ -1,0 +1,2830 @@
+<!DOCTYPE html>
+<html lang="fi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=yes">
+<meta name="description" content="Suomenkielinen Madeira-opas pariskunnalle 30.5.–5.6.2026. Interaktiivinen kartta, 3 viikkopakettia, autonvuokraus.">
+<meta name="theme-color" content="#E07856" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1719" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+
+<title>Madeira-opas · 30.5.–5.6.2026</title>
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFB97A'/%3E%3Cstop offset='1' stop-color='%23E07856'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Cpath d='M15 70 Q35 40 50 55 Q65 70 85 50' stroke='%231F2D2F' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='75' cy='30' r='10' fill='%23FFEBC7'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFB97A'/%3E%3Cstop offset='1' stop-color='%23E07856'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23g)'/%3E%3Cpath d='M15 70 Q35 40 50 55 Q65 70 85 50' stroke='%231F2D2F' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='75' cy='30' r='10' fill='%23FFEBC7'/%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+<style>
+/* ───────────────────────────────────────────────────────────────
+   DESIGN TOKENS
+   ─────────────────────────────────────────────────────────────── */
+:root,
+[data-theme="light"] {
+  --bg: #FAF6F0;
+  --bg-elevated: #FFFFFF;
+  --bg-soft: #F2EBE0;
+  --bg-overlay: rgba(250, 246, 240, 0.85);
+  --text: #1F2D2F;
+  --text-2: #5C6A6D;
+  --text-3: #8A9499;
+  --accent: #E07856;
+  --accent-hover: #C8623F;
+  --accent-soft: rgba(224, 120, 86, 0.12);
+  --accent-2: #2A6F7E;
+  --accent-2-soft: rgba(42, 111, 126, 0.12);
+  --border: rgba(31, 45, 47, 0.10);
+  --border-strong: rgba(31, 45, 47, 0.20);
+  --shadow-sm: 0 1px 2px rgba(31, 45, 47, 0.05);
+  --shadow-md: 0 4px 14px rgba(31, 45, 47, 0.08);
+  --shadow-lg: 0 16px 48px rgba(31, 45, 47, 0.14);
+  --success: #4A8A5C;
+  --warning: #C97A2D;
+  --danger: #B84747;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0F1719;
+  --bg-elevated: #1A2528;
+  --bg-soft: #243035;
+  --bg-overlay: rgba(15, 23, 25, 0.85);
+  --text: #E8E4DC;
+  --text-2: #A8A39B;
+  --text-3: #6F6A63;
+  --accent: #FF9A6B;
+  --accent-hover: #FFB387;
+  --accent-soft: rgba(255, 154, 107, 0.16);
+  --accent-2: #5BB8C7;
+  --accent-2-soft: rgba(91, 184, 199, 0.16);
+  --border: rgba(232, 228, 220, 0.10);
+  --border-strong: rgba(232, 228, 220, 0.20);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+  --success: #6BAA75;
+  --warning: #E8A75B;
+  --danger: #E07878;
+  color-scheme: dark;
+}
+
+:root {
+  /* Type colors — consistent across themes */
+  --t-pool: #3AAFA9;
+  --t-waterfall: #4FB3D9;
+  --t-beach: #E8C547;
+  --t-hike: #6BAA75;
+  --t-viewpoint: #B07AAB;
+  --t-garden: #E290B6;
+  --t-culture: #D89B5B;
+  --t-boat: #5193D5;
+  --t-village: #A78057;
+  --t-forest: #4A7A56;
+  --t-cave: #6B6E72;
+  --t-city: #5C6A6D;
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-display: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --fs-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --fs-sm: clamp(0.82rem, 0.78rem + 0.2vw, 0.92rem);
+  --fs-base: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  --fs-lg: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
+  --fs-xl: clamp(1.35rem, 1.15rem + 1vw, 1.65rem);
+  --fs-2xl: clamp(1.7rem, 1.3rem + 2vw, 2.4rem);
+  --fs-3xl: clamp(2.2rem, 1.6rem + 3vw, 3.4rem);
+
+  /* Spacing */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+  --s-12: 48px; --s-16: 64px;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* Layout */
+  --max-w: 720px;
+  --max-w-wide: 1200px;
+  --header-h: 56px;
+  --bottom-nav-h: 64px;
+
+  /* Animation */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 150ms;
+  --dur-med: 280ms;
+  --dur-slow: 480ms;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   RESET & BASE
+   ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top));
+  padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
+  transition: background-color var(--dur-med) ease, color var(--dur-med) ease;
+}
+
+[data-theme="dark"] body {
+  font-weight: 450;
+  letter-spacing: 0.005em;
+}
+
+h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; }
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); }
+h3 { font-size: var(--fs-lg); }
+h4 { font-size: var(--fs-base); font-weight: 600; }
+
+p { line-height: 1.6; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
+
+input, select, textarea {
+  font: inherit;
+  color: inherit;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+  transition: border-color var(--dur-fast), background-color var(--dur-fast);
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-elevated);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100px; left: var(--s-2);
+  background: var(--accent); color: white;
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r-sm);
+  z-index: 1000;
+  transition: top var(--dur-fast);
+}
+.skip-link:focus { top: var(--s-2); color: white; }
+
+/* ───────────────────────────────────────────────────────────────
+   HEADER
+   ─────────────────────────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: calc(var(--header-h) + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  background: var(--bg-overlay);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid var(--border);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: var(--max-w-wide);
+  margin: 0 auto;
+  padding: 0 var(--s-4);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  height: var(--header-h);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+.brand-mark {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FFB97A, var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.brand-text { display: none; }
+@media (min-width: 480px) { .brand-text { display: inline; } }
+
+.search-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-input {
+  width: 100%;
+  height: 38px;
+  padding: 0 var(--s-3) 0 36px;
+  background: var(--bg-soft);
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+}
+.search-input:focus {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+}
+.search-icon {
+  position: absolute; left: var(--s-3);
+  color: var(--text-3);
+  pointer-events: none;
+  width: 16px; height: 16px;
+}
+.search-clear {
+  position: absolute; right: 6px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: none;
+  align-items: center; justify-content: center;
+  color: var(--text-2);
+  background: var(--bg-elevated);
+}
+.search-clear.visible { display: flex; }
+.search-clear:hover { color: var(--text); background: var(--border-strong); }
+
+.theme-toggle {
+  width: 38px; height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--dur-fast), transform var(--dur-fast);
+}
+.theme-toggle:hover { background: var(--accent-soft); transform: scale(1.05); }
+.theme-toggle:active { transform: scale(0.95); }
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+/* ───────────────────────────────────────────────────────────────
+   FILTER CHIPS
+   ─────────────────────────────────────────────────────────────── */
+.filter-bar {
+  position: sticky;
+  top: calc(var(--header-h) + env(safe-area-inset-top));
+  z-index: 40;
+  background: var(--bg-overlay);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.filter-scroll {
+  max-width: var(--max-w-wide);
+  margin: 0 auto;
+  padding: var(--s-3) var(--s-4);
+  display: flex;
+  gap: var(--s-2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.filter-scroll::-webkit-scrollbar { display: none; }
+
+.chip {
+  padding: 7px var(--s-4);
+  border-radius: var(--r-pill);
+  background: var(--bg-soft);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background var(--dur-fast), color var(--dur-fast), transform var(--dur-fast);
+  min-height: 36px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.chip:hover { background: var(--accent-soft); color: var(--text); }
+.chip[aria-pressed="true"] {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+[data-theme="dark"] .chip[aria-pressed="true"] { color: #1A1410; }
+.chip-letter {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  font-size: 11px; font-weight: 700;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   VIEW CONTAINER
+   ─────────────────────────────────────────────────────────────── */
+.view {
+  display: none;
+  animation: fadeIn var(--dur-med) var(--ease-out);
+}
+.view.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+  max-width: var(--max-w-wide);
+  margin: 0 auto;
+  padding: var(--s-4);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   HERO BANNER (top of list view)
+   ─────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  margin: 0 calc(-1 * var(--s-4)) var(--s-6);
+  padding: var(--s-6) var(--s-4) var(--s-8);
+  background:
+    radial-gradient(ellipse at top right, rgba(255, 185, 122, 0.4), transparent 60%),
+    radial-gradient(ellipse at bottom left, rgba(91, 184, 199, 0.3), transparent 60%),
+    linear-gradient(135deg, var(--accent), #C8623F);
+  color: white;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.15) 0%, transparent 25%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 25%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: var(--max-w-wide);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.hero-dates {
+  font-size: var(--fs-sm);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: var(--s-2);
+  font-weight: 600;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: var(--s-3);
+}
+.hero-sub {
+  font-size: var(--fs-base);
+  opacity: 0.92;
+  max-width: 32ch;
+  line-height: 1.5;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+  padding-top: var(--s-6);
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+.hero-stat-num {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+.hero-stat-lbl {
+  font-size: var(--fs-xs);
+  opacity: 0.85;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* Package banner shown when filter active */
+.pkg-banner {
+  display: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+  margin-bottom: var(--s-4);
+  font-size: var(--fs-sm);
+  align-items: center;
+  gap: var(--s-3);
+  color: var(--text-2);
+}
+.pkg-banner.visible { display: flex; }
+.pkg-banner-go {
+  margin-left: auto;
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   PLACE CARDS
+   ─────────────────────────────────────────────────────────────── */
+.results-meta {
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+  margin-bottom: var(--s-3);
+  padding: 0 var(--s-1);
+}
+
+.card-grid {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); gap: var(--s-4); }
+}
+@media (min-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.card {
+  background: var(--bg-elevated);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  contain: content;
+  cursor: pointer;
+  transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med);
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.card:active { transform: translateY(0); }
+
+.card-img {
+  position: relative;
+  aspect-ratio: 16/10;
+  background: var(--type-bg, var(--bg-soft));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.card-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top right, rgba(255,255,255,0.18), transparent 60%),
+    radial-gradient(ellipse at bottom left, rgba(0,0,0,0.12), transparent 50%);
+}
+.card-emoji {
+  font-size: 56px;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+.card-type-chip {
+  position: absolute;
+  top: var(--s-3); left: var(--s-3);
+  padding: 4px var(--s-3);
+  background: rgba(255,255,255,0.95);
+  color: var(--text);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  border-radius: var(--r-pill);
+  letter-spacing: 0.02em;
+}
+[data-theme="dark"] .card-type-chip { background: rgba(0,0,0,0.6); color: var(--text); backdrop-filter: blur(8px); }
+.card-fav {
+  position: absolute;
+  top: var(--s-3); right: var(--s-3);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform var(--dur-fast), background var(--dur-fast);
+}
+[data-theme="dark"] .card-fav { background: rgba(0,0,0,0.5); }
+.card-fav:hover { transform: scale(1.1); }
+.card-fav:active { transform: scale(0.92); }
+.card-fav svg { width: 18px; height: 18px; stroke: var(--text-2); fill: none; stroke-width: 2; transition: stroke var(--dur-fast), fill var(--dur-fast); }
+.card-fav.active svg { stroke: var(--accent); fill: var(--accent); }
+
+.card-body {
+  padding: var(--s-4);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card-title {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: var(--s-1);
+  color: var(--text);
+}
+.card-sub {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  margin-bottom: var(--s-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+.card-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: var(--s-3);
+}
+.card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: auto;
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+.card-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.card-stat svg { width: 13px; height: 13px; flex-shrink: 0; color: var(--text-3); }
+.card-pkg-tags {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: auto;
+}
+.pkg-tag {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: var(--s-12) var(--s-4);
+  color: var(--text-2);
+}
+.empty-icon { font-size: 48px; margin-bottom: var(--s-3); opacity: 0.5; }
+.empty-text { font-size: var(--fs-base); }
+.empty-hint { font-size: var(--fs-sm); color: var(--text-3); margin-top: var(--s-2); }
+
+/* ───────────────────────────────────────────────────────────────
+   DETAIL PANEL (Slide-in)
+   ─────────────────────────────────────────────────────────────── */
+.panel-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(15, 23, 25, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 80;
+  transition: opacity var(--dur-med);
+}
+.panel-backdrop.open { opacity: 1; pointer-events: auto; }
+
+.panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(560px, 100vw);
+  background: var(--bg);
+  z-index: 90;
+  transform: translateX(100%);
+  transition: transform var(--dur-slow) var(--ease-out);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: var(--shadow-lg);
+}
+.panel.open { transform: translateX(0); }
+
+.panel-hero {
+  position: relative;
+  aspect-ratio: 16/10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.panel-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at top right, rgba(255,255,255,0.2), transparent 60%),
+    radial-gradient(ellipse at bottom left, rgba(0,0,0,0.18), transparent 50%);
+}
+.panel-hero-emoji {
+  position: relative;
+  z-index: 1;
+  font-size: 96px;
+  margin: var(--s-6);
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.25));
+}
+.panel-close {
+  position: fixed;
+  top: calc(var(--s-3) + env(safe-area-inset-top));
+  right: var(--s-4);
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.92);
+  color: var(--text);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+  transition: transform var(--dur-fast);
+}
+.panel-close:hover { transform: scale(1.05); }
+.panel-close:active { transform: scale(0.92); }
+.panel-close svg { width: 18px; height: 18px; }
+
+.panel-body {
+  padding: var(--s-6) var(--s-5) var(--s-12);
+}
+
+.panel-title {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--s-1);
+}
+.panel-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+  margin-bottom: var(--s-4);
+}
+.panel-desc {
+  font-size: var(--fs-base);
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: var(--s-6);
+}
+
+.panel-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+.panel-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.panel-stat-lbl {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  display: flex; align-items: center; gap: 4px;
+}
+.panel-stat-lbl svg { width: 12px; height: 12px; }
+.panel-stat-val {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.panel-section { margin-bottom: var(--s-6); }
+.panel-section-title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: var(--s-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.panel-section-title svg { width: 16px; height: 16px; }
+
+.tips-list, .warn-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.tips-list li, .warn-list li {
+  position: relative;
+  padding: var(--s-3) var(--s-3) var(--s-3) var(--s-10);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text);
+}
+.tips-list li::before {
+  content: '✦';
+  position: absolute;
+  left: var(--s-4);
+  top: var(--s-3);
+  color: var(--accent);
+  font-size: 16px;
+}
+.warn-list li {
+  border-color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 6%, var(--bg-elevated));
+}
+.warn-list li::before {
+  content: '⚠';
+  position: absolute;
+  left: var(--s-4);
+  top: var(--s-3);
+  color: var(--warning);
+  font-size: 14px;
+}
+
+.panel-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+  margin-top: var(--s-8);
+}
+.btn {
+  min-height: 48px;
+  padding: 0 var(--s-4);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  transition: background var(--dur-fast), transform var(--dur-fast);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+.btn:hover { background: var(--bg-soft); }
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+[data-theme="dark"] .btn-primary { color: #1A1410; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn svg { width: 16px; height: 16px; }
+
+/* ───────────────────────────────────────────────────────────────
+   MAP VIEW
+   ─────────────────────────────────────────────────────────────── */
+#view-map { padding: 0; }
+#map {
+  width: 100%;
+  height: calc(100vh - var(--header-h) - var(--bottom-nav-h) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 60px);
+  background: var(--bg-soft);
+}
+.leaflet-popup-content-wrapper {
+  background: var(--bg-elevated) !important;
+  color: var(--text) !important;
+  border-radius: var(--r-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+.leaflet-popup-tip { background: var(--bg-elevated) !important; }
+.leaflet-popup-content { margin: var(--s-3) var(--s-4) !important; font-family: var(--font-sans) !important; }
+.popup-title { font-weight: 600; font-size: var(--fs-base); margin-bottom: 4px; color: var(--text); }
+.popup-meta { font-size: var(--fs-xs); color: var(--text-3); margin-bottom: var(--s-2); }
+.popup-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--accent); font-weight: 600; font-size: var(--fs-sm);
+  cursor: pointer;
+}
+
+/* Custom map markers */
+.map-pin {
+  width: 32px; height: 40px;
+  position: relative;
+}
+.map-pin-bg {
+  width: 32px; height: 32px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--pin-color, var(--accent));
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 0; left: 0;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.map-pin-emoji {
+  position: absolute;
+  top: 4px; left: 0; right: 0;
+  text-align: center;
+  font-size: 16px;
+  line-height: 22px;
+  z-index: 1;
+}
+
+/* ───────────────────────────────────────────────────────────────
+   PÄIVÄT (DAYS / ITINERARY) VIEW
+   ─────────────────────────────────────────────────────────────── */
+.pkg-tabs {
+  display: flex;
+  gap: var(--s-2);
+  margin-bottom: var(--s-6);
+  background: var(--bg-elevated);
+  padding: 4px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+}
+.pkg-tab {
+  flex: 1;
+  padding: var(--s-3) var(--s-2);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+  transition: background var(--dur-fast), color var(--dur-fast);
+  min-height: 44px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.pkg-tab[aria-pressed="true"] {
+  background: var(--accent);
+  color: white;
+}
+[data-theme="dark"] .pkg-tab[aria-pressed="true"] { color: #1A1410; }
+.pkg-tab-label {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.pkg-summary {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  margin-bottom: var(--s-6);
+}
+.pkg-summary-title {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  margin-bottom: var(--s-1);
+}
+.pkg-summary-tag {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-3);
+}
+.pkg-summary-desc {
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: var(--s-4);
+  font-size: var(--fs-sm);
+}
+.pkg-summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border);
+}
+.pkg-summary-stat {
+  text-align: center;
+}
+.pkg-summary-stat-val {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--accent);
+  font-family: var(--font-display);
+  line-height: 1;
+}
+.pkg-summary-stat-lbl {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.day-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  margin-bottom: var(--s-4);
+  position: relative;
+}
+.day-card-num {
+  position: absolute;
+  top: var(--s-5);
+  right: var(--s-5);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  font-family: var(--font-display);
+  display: flex; align-items: center; justify-content: center;
+}
+.day-card-date {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.day-card-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: var(--s-1);
+  padding-right: 56px;
+}
+.day-card-theme {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  margin-bottom: var(--s-4);
+  line-height: 1.5;
+}
+.day-card-stops {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+}
+.day-stop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding: var(--s-3);
+  background: var(--bg-soft);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background var(--dur-fast);
+}
+.day-stop:hover { background: var(--bg-elevated); border: 1px solid var(--border); padding: calc(var(--s-3) - 1px); }
+.day-stop-time {
+  font-size: var(--fs-xs);
+  color: var(--accent);
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 38px;
+  padding-top: 2px;
+}
+.day-stop-emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+.day-stop-content { flex: 1; min-width: 0; }
+.day-stop-name {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: var(--text);
+}
+.day-stop-meta {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  line-height: 1.4;
+}
+.day-stop-arrow {
+  color: var(--text-3);
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.day-stop-arrow svg { width: 14px; height: 14px; }
+
+.day-card-notes {
+  padding: var(--s-3) var(--s-4);
+  background: var(--accent-2-soft);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text);
+  border-left: 3px solid var(--accent-2);
+}
+.day-card-notes strong { color: var(--accent-2); }
+
+.day-card-stats {
+  display: flex;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  flex-wrap: wrap;
+}
+.day-card-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.day-card-stat strong { color: var(--text); font-weight: 600; }
+
+/* ───────────────────────────────────────────────────────────────
+   INFO VIEW
+   ─────────────────────────────────────────────────────────────── */
+.info-section {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  margin-bottom: var(--s-4);
+}
+.info-section-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  margin-bottom: var(--s-4);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.info-section-emoji {
+  font-size: 24px;
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+}
+.info-block { margin-bottom: var(--s-4); }
+.info-block:last-child { margin-bottom: 0; }
+.info-block h4 {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  margin-bottom: var(--s-2);
+  color: var(--text);
+}
+.info-block p, .info-block li {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.info-block ul {
+  padding-left: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.info-block table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  margin-top: var(--s-2);
+}
+.info-block th, .info-block td {
+  text-align: left;
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--border);
+}
+.info-block th {
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg-soft);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.info-block td { color: var(--text-2); }
+.info-block td strong { color: var(--text); }
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--s-3);
+}
+.weather-card {
+  text-align: center;
+  padding: var(--s-3);
+  background: var(--bg-soft);
+  border-radius: var(--r-md);
+}
+.weather-card-icon { font-size: 24px; margin-bottom: var(--s-1); }
+.weather-card-val {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-display);
+}
+.weather-card-lbl {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-3) var(--s-4);
+  background: var(--bg-soft);
+  border-radius: var(--r-md);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background var(--dur-fast);
+}
+.link-row:hover { background: var(--accent-soft); color: var(--text); }
+.link-row svg { width: 16px; height: 16px; color: var(--text-3); }
+
+.alert {
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  margin-bottom: var(--s-4);
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+}
+.alert-info { background: var(--accent-2-soft); color: var(--text); border-left: 3px solid var(--accent-2); }
+.alert-warn { background: color-mix(in srgb, var(--warning) 12%, var(--bg-elevated)); color: var(--text); border-left: 3px solid var(--warning); }
+.alert-icon { font-size: 18px; flex-shrink: 0; }
+.alert strong { color: var(--text); font-weight: 600; }
+
+/* ───────────────────────────────────────────────────────────────
+   BOTTOM NAVIGATION
+   ─────────────────────────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-top: 1px solid var(--border);
+  z-index: 60;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom-nav-inner {
+  max-width: var(--max-w-wide);
+  margin: 0 auto;
+  height: var(--bottom-nav-h);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-3);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color var(--dur-fast);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-btn svg { width: 22px; height: 22px; transition: transform var(--dur-fast); }
+.nav-btn:hover { color: var(--text); }
+.nav-btn[aria-pressed="true"] { color: var(--accent); }
+.nav-btn[aria-pressed="true"] svg { transform: translateY(-1px) scale(1.05); }
+.nav-btn[aria-pressed="true"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 24px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--accent);
+  transform: translateX(-50%);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   UTILITY
+   ─────────────────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.no-results {
+  text-align: center;
+  padding: var(--s-12) var(--s-4);
+  color: var(--text-2);
+}
+
+/* Smooth pull on iOS */
+.view, body { overscroll-behavior-y: contain; }
+
+/* Print */
+@media print {
+  .header, .bottom-nav, .filter-bar, .panel-close, .card-fav, .theme-toggle { display: none !important; }
+  body { padding: 0; }
+  .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Hyppää sisältöön</a>
+
+<!-- ───────── HEADER ───────── -->
+<header class="header" role="banner">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">🌴</span>
+      <span class="brand-text">Madeira</span>
+    </div>
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input type="search" class="search-input" id="search"
+             placeholder="Hae paikkaa, tyyppiä..." aria-label="Hae paikkoja">
+      <button class="search-clear" id="searchClear" aria-label="Tyhjennä haku">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 6-12 12M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Vaihda tumma/vaalea tila">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ───────── FILTER BAR ───────── -->
+<div class="filter-bar" id="filterBar">
+  <div class="filter-scroll" role="tablist" aria-label="Pakettisuodattimet">
+    <button class="chip" data-filter="all" aria-pressed="true">Kaikki</button>
+    <button class="chip" data-filter="A" aria-pressed="false"><span class="chip-letter">A</span>Klassikko</button>
+    <button class="chip" data-filter="B" aria-pressed="false"><span class="chip-letter">B</span>Luonto</button>
+    <button class="chip" data-filter="C" aria-pressed="false"><span class="chip-letter">C</span>Rento</button>
+    <button class="chip" data-filter="fav" aria-pressed="false">♥ Suosikit</button>
+  </div>
+</div>
+
+<!-- ───────── MAIN ───────── -->
+<main id="main" role="main">
+
+  <!-- LIST VIEW -->
+  <section class="view active" id="view-list" aria-labelledby="list-h">
+    <div class="container">
+      <div class="hero">
+        <div class="hero-inner">
+          <div class="hero-dates">30.5. – 5.6.2026 · 7 päivää</div>
+          <h1 class="hero-title" id="list-h">Madeira<br>pariskunnalle</h1>
+          <p class="hero-sub">Rento reitti Funchalista käsin. Helppoja kävelyitä, ikoniset näköalat, luonnonaltaat ja paikalliset herkut.</p>
+          <div class="hero-stats">
+            <div><div class="hero-stat-num" id="statPlaces">—</div><div class="hero-stat-lbl">paikkaa</div></div>
+            <div><div class="hero-stat-num">3</div><div class="hero-stat-lbl">pakettia</div></div>
+            <div><div class="hero-stat-num">7</div><div class="hero-stat-lbl">päivää</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-banner" id="pkgBanner">
+        <span id="pkgBannerText"></span>
+        <button class="pkg-banner-go" id="pkgBannerGo">Avaa päiväreitti →</button>
+      </div>
+      <div class="results-meta" id="resultsMeta"></div>
+      <div class="card-grid" id="cardGrid" role="list"></div>
+      <div class="empty" id="emptyState" style="display:none">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">Ei tuloksia</div>
+        <div class="empty-hint">Kokeile toista hakusanaa tai suodatinta.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP VIEW -->
+  <section class="view" id="view-map" aria-labelledby="map-h">
+    <h2 id="map-h" class="sr-only">Kartta</h2>
+    <div id="map"></div>
+  </section>
+
+  <!-- DAYS VIEW -->
+  <section class="view" id="view-days" aria-labelledby="days-h">
+    <div class="container">
+      <h2 id="days-h" class="sr-only">Päivärytmit</h2>
+      <div class="pkg-tabs" role="tablist">
+        <button class="pkg-tab" data-pkg="A" aria-pressed="true">A · Klassikko<span class="pkg-tab-label">Ikoniset</span></button>
+        <button class="pkg-tab" data-pkg="B" aria-pressed="false">B · Luonto<span class="pkg-tab-label">Patikat</span></button>
+        <button class="pkg-tab" data-pkg="C" aria-pressed="false">C · Rento<span class="pkg-tab-label">Maisemat</span></button>
+      </div>
+      <div id="pkgContent"></div>
+    </div>
+  </section>
+
+  <!-- INFO VIEW -->
+  <section class="view" id="view-info" aria-labelledby="info-h">
+    <div class="container">
+      <h2 id="info-h" class="sr-only">Käytännön tiedot</h2>
+      <div id="infoContent"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ───────── DETAIL PANEL ───────── -->
+<div class="panel-backdrop" id="panelBackdrop"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" tabindex="-1">
+  <button class="panel-close" id="panelClose" aria-label="Sulje">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 6-12 12M6 6l12 12"/></svg>
+  </button>
+  <div id="panelContent"></div>
+</aside>
+
+<!-- ───────── BOTTOM NAV ───────── -->
+<nav class="bottom-nav" role="navigation" aria-label="Päänavigaatio">
+  <div class="bottom-nav-inner">
+    <button class="nav-btn" data-view="list" aria-pressed="true" aria-label="Lista">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      <span>Lista</span>
+    </button>
+    <button class="nav-btn" data-view="map" aria-pressed="false" aria-label="Kartta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Kartta</span>
+    </button>
+    <button class="nav-btn" data-view="days" aria-pressed="false" aria-label="Päivät">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span>Päivät</span>
+    </button>
+    <button class="nav-btn" data-view="info" aria-pressed="false" aria-label="Info">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span>Info</span>
+    </button>
+  </div>
+</nav>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+/* ============================================================
+   DATA: PAIKAT (PLACES)
+   ============================================================ */
+const TYPES = {
+  pool:      { fi: 'Luonnonallas',   emoji: '🏊', color: 'var(--t-pool)' },
+  waterfall: { fi: 'Vesiputous',     emoji: '💦', color: 'var(--t-waterfall)' },
+  beach:     { fi: 'Ranta',          emoji: '🏖️', color: 'var(--t-beach)' },
+  hike:      { fi: 'Levada-patikka', emoji: '🥾', color: 'var(--t-hike)' },
+  peak:      { fi: 'Vuoripatikka',   emoji: '🏔️', color: 'var(--t-viewpoint)' },
+  viewpoint: { fi: 'Näköalapaikka',  emoji: '🌄', color: 'var(--t-viewpoint)' },
+  garden:    { fi: 'Puutarha',       emoji: '🌺', color: 'var(--t-garden)' },
+  culture:   { fi: 'Kulttuuri',      emoji: '🏛️', color: 'var(--t-culture)' },
+  boat:      { fi: 'Merikierros',    emoji: '🐬', color: 'var(--t-boat)' },
+  village:   { fi: 'Kylä',           emoji: '🏘️', color: 'var(--t-village)' },
+  forest:    { fi: 'Metsä',          emoji: '🌲', color: 'var(--t-forest)' },
+  cave:      { fi: 'Luola',          emoji: '🕳️', color: 'var(--t-cave)' },
+  cablecar:  { fi: 'Köysirata',      emoji: '🚠', color: 'var(--t-boat)' },
+  city:      { fi: 'Kaupunki',       emoji: '🏙️', color: 'var(--t-city)' },
+};
+
+const PLACES = [
+  {
+    id: 'funchal-old',
+    name: 'Funchalin vanha kaupunki',
+    pt: 'Zona Velha do Funchal',
+    type: 'city',
+    lat: 32.6479, lon: -16.9081,
+    desc: 'Madeiran pääkaupungin sykkivä sydän: maalatut ovet Rua de Santa Marialla, Mercado dos Lavradores, Sé-katedraali ja kalastajakortteleita. Tukikohtanne illalliselle ja iltakävelyille.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 240, durationText: '3–4 h',
+    driveMin: 0, driveKm: 0,
+    bestTime: 'aamu (markkinat) tai ilta (illallinen)',
+    bestSeason: 'läpi vuoden',
+    parking: 'Almirante Reis tai La Vie -parkkihalli ~7–10 €/päivä',
+    tips: [
+      'Mercado dos Lavradores ma–la aamulla — kalat tuoreina, mutta varo turistihintoja',
+      'Rua de Santa Maria iltaravintoloihin: Armazém do Sal, O Tasco',
+      'Sé-katedraali ilmainen, sakraalitaiteen museo 5 €',
+      'Vältä autolla keskustaan — kapeat mukulakivikadut'
+    ],
+    warnings: [],
+    pkgs: ['A', 'B', 'C'],
+  },
+  {
+    id: 'monte-palace',
+    name: 'Monte Palace Tropical Garden',
+    pt: 'Monte Palace Tropical Garden',
+    type: 'garden',
+    lat: 32.6747, lon: -16.9036,
+    desc: '70 000 m² maisemapuutarha 600 m korkeudessa Montessa. Sisältää Jardim Orientalin (japanilais-kiinalainen osa), Buddha-veistoksia, Koi-lampia, kaksi museota ja huikeat näkymät. Yksi Funchalin pakollisista.',
+    price: 17.5, priceNote: '17,50 € (alle 14v ilmainen)',
+    duration: 180, durationText: '~3 h',
+    driveMin: 20, driveKm: 6,
+    bestTime: 'aamu — vähemmän ruuhkaa',
+    bestSeason: 'läpi vuoden; kukinta huhti–kesäkuu',
+    parking: 'kapea kadunvarsi → suositus: köysirata Funchalin keskustasta',
+    tips: [
+      'Köysirata Zona Velhasta 16,50 € meno-paluu — elämys itsessään',
+      'Alas: kuuluisat Carros de Cesto -kelkat ~30 € / 2 hlö (Boscoetes)',
+      'Jardim Oriental sisältyy lippuun — ei erillinen kohde',
+      'Mukava kahvila puutarhassa lounaalle'
+    ],
+    warnings: ['Jyrkkiä polkuja — hyvät kengät', 'Kelkkavuoroon voi olla jonoa kesäkaudessa'],
+    pkgs: ['A', 'C'],
+  },
+  {
+    id: 'pico-arieiro',
+    name: 'Pico do Arieiro',
+    pt: 'Miradouro do Pico do Arieiro',
+    type: 'viewpoint',
+    lat: 32.7355, lon: -16.9286,
+    desc: '1818 m korkea huippu, jonne pääsee suoraan autolla. Madeiran ikonisin auringonnousupaikka — pilvimeri jalkojen alla. PR1-polku Pico Ruivoon on yksisuuntainen (10,50 €).',
+    price: 0, priceNote: 'ilmainen (parkki & WC maksullinen)',
+    duration: 60, durationText: '1 h näköala',
+    driveMin: 40, driveKm: 20,
+    bestTime: 'auringonnousu (klo 6:35 kesäkuussa) tai -lasku',
+    bestSeason: 'läpi vuoden — tarkista webcam ennen lähtöä',
+    parking: 'iso ilmainen parkki — auringonnousulle saavu klo 5:30',
+    tips: [
+      'Lähde Funchalista klo 5:00 ehtiäksesi auringonnousuun',
+      'Lämpötila huipulla 10–15 °C — ota fleece tai untuvatakki',
+      'Tarkista pilvitilanne webcam-madeira.com ennen lähtöä',
+      'Pimeä mutkainen tie ylös — aja varovasti',
+      'Kahvila ja WC päiväsaikaan, ota käteistä'
+    ],
+    warnings: ['Auringonnousulle parkki täyttyy 30 min ennen — saavu ajoissa', 'Tuulinen ja kylmä huipulla — varaudu kerrospukeutumiseen'],
+    pkgs: ['A', 'B', 'C'],
+  },
+  {
+    id: 'pico-ruivo',
+    name: 'Pico Ruivo (1862 m)',
+    pt: 'Pico Ruivo (PR1.2 Achada do Teixeira)',
+    type: 'peak',
+    lat: 32.7589, lon: -16.9408,
+    desc: 'Madeiran korkein huippu. Helpoin reitti Achada do Teixeirasta: 5,6 km edestakaisin, 260 m korkeusero, 3 h. Sopii rentoon päivään — vaativan PR1:n sijaan.',
+    price: 3, priceNote: '3 € (SIMplifica-varaus pakollinen)',
+    duration: 180, durationText: '3 h patikka',
+    driveMin: 60, driveKm: 47,
+    hikeKm: 5.6, difficulty: 'helppo–keskitaso',
+    bestTime: 'aamu — vältä iltapäivän pilviä',
+    bestSeason: 'huhti–lokakuu kirkkaimmillaan',
+    parking: 'Achada do Teixeira: iso ilmainen parkki, kahvila Abrigo da Heidi',
+    tips: [
+      'EHDOTON SUOSITUS: PR1.2 (Achada → Pico Ruivo). PR1 (Arieirosta) on nyt yksisuuntainen ja 10,50 €',
+      'Varaa SIMplifica-portaali etukäteen — kesäkuussa kysyntää',
+      'Ajo Santanan kautta 45–60 min mutkaista tietä ylös',
+      'Yhdistä Santanan kylään ja Rocha do Navioon samaan päivään',
+      '10–15 °C kylmempi kuin Funchalissa — pukeudu kerroksittain'
+    ],
+    warnings: ['Sumu voi tulla nopeasti — tarkista sää ennen lähtöä', 'Hengästyttää korkeudessa jos huonossa kunnossa'],
+    pkgs: ['B'],
+  },
+  {
+    id: 'porto-moniz',
+    name: 'Porto Mozin luonnonaltaat',
+    pt: 'Piscinas Naturais do Porto Moniz',
+    type: 'pool',
+    lat: 32.8688, lon: -17.1722,
+    desc: 'Laavakivestä muotoutuneet meriveden täyttämät altaat luoteiskärjessä. Madeiran ikonisimpia uintipaikkoja. Maksullisen kompleksin vieressä ilmaiset Cachalote-altaat (24/7).',
+    price: 3, priceNote: '3 €',
+    duration: 120, durationText: '2 h',
+    driveMin: 75, driveKm: 50,
+    bestTime: 'aamu — vältä ruuhkaa ja tuulta',
+    bestSeason: 'touko–lokakuu (vesi lämmin elo–syys)',
+    parking: 'helppo, maksullinen kadunvarsi/parkkihalli lähellä',
+    tips: [
+      'Tule ennen klo 11 saadaksesi parkkipaikan ja altaat itselle',
+      'Ota uimapuku, pyyhe ja vesikengät — kallio terävää',
+      'Cachalote-altaat ilmaiseksi vieressä jos haluat säästää',
+      'Yhdistä Seixaliin ja Véu da Noivaan samalle reissulle'
+    ],
+    warnings: ['Tuulisina päivinä aallot voivat sulkea altaat', 'Pohjoisrannikolla sää voi muuttua nopeasti'],
+    pkgs: ['A', 'B', 'C'],
+  },
+  {
+    id: 'seixal',
+    name: 'Seixalin altaat ja musta hiekka',
+    pt: 'Piscinas Naturais do Seixal / Praia da Laje',
+    type: 'pool',
+    lat: 32.8254, lon: -17.1024,
+    desc: 'Pieni kalastajakylä pohjoisrannikolla: luonnolliset laavakivialtaat JA harvinainen musta vulkaaninen hiekkaranta. Vehreä amfiteatteri suojaa tuulilta. Hiljaisempi vaihtoehto Porto Mozille.',
+    price: 2.5, priceNote: 'altaat 2,50 € / ranta ilmainen',
+    duration: 150, durationText: '2–3 h',
+    driveMin: 45, driveKm: 41,
+    bestTime: 'aamu ennen ruuhkaa',
+    bestSeason: 'kesä–elokuu vesi lämpimimmillään',
+    parking: 'ilmainen mutta pieni — täyttyy ennen puoltapäivää',
+    tips: [
+      'Mustan hiekkarannan parkki erillinen altaista — käy molemmissa',
+      'Vesikengät hyödylliset altailla',
+      'Yhdistä Porto Mozin ja Véu da Noivan kanssa pohjoisrannikon kierrokseen'
+    ],
+    warnings: ['Aallot voivat olla voimakkaita rannalla — varo virtauksia'],
+    pkgs: ['A', 'B', 'C'],
+  },
+  {
+    id: 'veu-da-noiva',
+    name: 'Véu da Noiva (Morsiamenhuntu)',
+    pt: 'Miradouro do Véu da Noiva',
+    type: 'waterfall',
+    lat: 32.8194, lon: -17.0844,
+    desc: '30 m vesiputous, joka kaatuu vehreältä vuorelta suoraan mereen São Vicenten ja Seixalin välillä. Yksi Madeiran ikonisimmista valokuvauspaikoista. Nopea pysähdys VR2-tieltä, pyörätuolilla saavutettavissa.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 20, durationText: '15–20 min',
+    driveMin: 40, driveKm: 35,
+    bestTime: 'aamu — paras valo, vähemmän ruuhkaa',
+    bestSeason: 'talvi/kevät suurin virtaus; kesäkuussa heikompi',
+    parking: 'iso ilmainen päällystetty parkki suoraan VR2:n vieressä',
+    tips: [
+      'NOPEA PYSÄHDYS — ei tarvitse pidempää',
+      'Sijaitsee Seixalin/São Vicenten reitillä — helppo yhdistää',
+      'Pyörätuoliystävällinen näkymäpiste'
+    ],
+    warnings: ['Kesäkuussa virtaus voi olla pettymyksellisen pieni — kuiva keväällä'],
+    pkgs: ['A', 'B', 'C'],
+  },
+  {
+    id: 'fanal',
+    name: 'Fanalin laakerimetsä',
+    pt: 'Floresta Laurissilva do Fanal',
+    type: 'forest',
+    lat: 32.8169, lon: -17.1539,
+    desc: 'Vuosisatojen vanhojen Til-puiden mystinen UNESCO-metsä Paul da Serran tasangolla 1100 m korkeudessa. Tunnetaan sumusta ja sammaleisista puista. Kesäkuussa sumu epätodennäköinen, mutta puut surrealistisia silti.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 90, durationText: '1,5 h',
+    driveMin: 75, driveKm: 55,
+    hikeKm: 2, difficulty: 'helppo',
+    bestTime: 'klo 8–11 — sumu todennäköisin',
+    bestSeason: 'parhaiten loka–helmikuu; kesäkuussa sumu harvinainen',
+    parking: 'ilmainen parkki Posto Florestal do Fanalin vieressä — täyttyy klo 10:30',
+    tips: [
+      'Tule aamulla klo 8–9 jos toivot sumua',
+      'Puut surrealistisen kauniita auringossakin — käymisen arvoinen ilman sumua',
+      'Yhdistä Porto Moniziin samaan päivään (35 min ajo)',
+      'IFCN-säännöt: pysy merkityillä poluilla'
+    ],
+    warnings: ['Sää muuttuu nopeasti 1100 m korkeudessa — kerrospukeutuminen', 'ER209 mutkainen ja kapea — aja varovasti'],
+    pkgs: ['A', 'B'],
+  },
+  {
+    id: '25-fontes',
+    name: '25 Lähteen Levada + Risco',
+    pt: 'PR6 Levada das 25 Fontes',
+    type: 'hike',
+    lat: 32.7589, lon: -17.1356,
+    desc: 'Madeiran ikoninen levada-vaellus Rabaçalin laaksoon. Polku päättyy luolaan johon putoaa 25 lähdettä. Voidaan yhdistää Risco-vesiputoukseen samalle reissulle (vain +1,6 km).',
+    price: 3, priceNote: '3 € (SIMplifica-varaus pakollinen 2026)',
+    duration: 270, durationText: '4–5 h sis. Risco',
+    driveMin: 60, driveKm: 45,
+    hikeKm: 11, difficulty: 'keskitaso',
+    bestTime: 'aikainen aamu (ensimmäinen aikaikkuna ~7:30)',
+    bestSeason: 'huhti–kesäkuu, syys–lokakuu',
+    parking: 'Rabaçalin parkki ER209:llä; shuttlebussi alas 5 € meno-paluu (käteinen)',
+    tips: [
+      'Varaa SIMplifica.com etukäteen — kesäkuussa kysyntää',
+      'Yhdistä Riscoon — sama aikaikkuna, vain +20–30 min',
+      'Polulla paljon portaita alkuun — jalat tuntuvat paluulla',
+      'Ota lounas, 1,5 l vettä/hlö, aurinkovoide, hattu'
+    ],
+    warnings: ['Polku märkä — liukastumisriski, kunnon kengät', 'Voi sulkeutua sään tai vyöryjen takia'],
+    pkgs: ['B'],
+  },
+  {
+    id: 'santana',
+    name: 'Santanan perinnetalot',
+    pt: 'Casas Típicas de Santana',
+    type: 'culture',
+    lat: 32.8079, lon: -16.8784,
+    desc: 'Pohjoisrannikon kylä jossa kolmiokattoiset olkikattoiset A-talot. Núcleo de Casas Típicas avoinna katseltavaksi (souvenir-myymälöinä). Hyvä portti pohjoisen retkille.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 60, durationText: '45–60 min',
+    driveMin: 45, driveKm: 35,
+    bestTime: 'aamu tai aikainen iltapäivä',
+    bestSeason: 'läpi vuoden',
+    parking: 'helppo, ilmainen keskustassa',
+    tips: [
+      'Talot pieniä — 30–60 min riittää',
+      'Yhdistä Pico Ruivoon, Rocha do Navioon, Aguageen ja Caldeirão Verdeen — kaikki saman kunnan sisällä',
+      'Quinta do Furão Santanan reunalla = erinomainen lounaspaikka näköalalla'
+    ],
+    warnings: ['Talot toimivat lähinnä myymälöinä — älä odota museota'],
+    pkgs: ['A', 'C'],
+  },
+  {
+    id: 'rocha-navio',
+    name: 'Rocha do Navion köysirata',
+    pt: 'Teleférico da Rocha do Navio',
+    type: 'cablecar',
+    lat: 32.8089, lon: -16.8478,
+    desc: 'Köysirata Santanasta 330 m alas rannikon fajã-tasangolle. Alhaalla viljelyalue, kalastajavaja, meri ja huikea näkymä matkalla. 5 min köysiradan matka.',
+    price: 5, priceNote: '5 € meno-paluu',
+    duration: 90, durationText: '1–1,5 h',
+    driveMin: 45, driveKm: 37,
+    bestTime: 'aamupäivä',
+    bestSeason: 'läpi vuoden',
+    parking: 'ilmainen Santanan ylätasanteella köysiradan vieressä',
+    tips: [
+      'Yhdistä Santanaan samaan päivään (3 km välimatka)',
+      'Alhaalla voi uida kivirannassa — ota uimapuku',
+      'Käteistä mukaan'
+    ],
+    warnings: ['Köysirata seisahtaa kovassa tuulessa', 'Tarkista aukioloajat etukäteen'],
+    pkgs: ['A', 'C'],
+  },
+  {
+    id: 'aguage',
+    name: 'Aguagen vesiputous',
+    pt: 'Cascata da Aguage (Faial)',
+    type: 'waterfall',
+    lat: 32.7869, lon: -16.8825,
+    desc: '20 m yksisäikeinen vesiputous Santanan lounaispuolella, trooppisen kasvillisuuden ympäröimä uima-allas. Lyhyt 30 min polku. Tunnetaan paikallisesti myös nimellä "Água d\'Alto".',
+    price: 0, priceNote: 'ilmainen',
+    duration: 60, durationText: '1 h',
+    driveMin: 45, driveKm: 37,
+    hikeKm: 0.66, difficulty: 'helppo',
+    bestTime: 'aamu',
+    bestSeason: 'kevät ja syksy; kesäkuussa virtaus kohtuullinen',
+    parking: 'Lamaceirosin lähistöllä kadunvarsi, vähän paikkoja',
+    tips: [
+      'Polun aloitus: Vereda Lamaceiros — Cascata da Aguage',
+      'Yhdistä Santanan kylän kanssa',
+      'Sopii rentoon päivään — ei vaadi kuntoa'
+    ],
+    warnings: ['Polku paikoin liukas — kunnon kengät'],
+    pkgs: ['A', 'B'],
+  },
+  {
+    id: 'sao-vicente',
+    name: 'São Vicenten luolat',
+    pt: 'Grutas e Centro de Vulcanismo',
+    type: 'cave',
+    lat: 32.7975, lon: -17.0431,
+    desc: 'Madeiran ainoat kävijöille avoimet vulkaaniset laavaluolat. 700 m maanalainen reitti opastettuna. Vulkanismikeskus näyttävällä saaren synnyn historialla. Hyvä sateisen päivän aktiviteetti.',
+    price: 8, priceNote: '8 € / 6 € lapsi-seniori',
+    duration: 120, durationText: '2 h sis. museon',
+    driveMin: 35, driveKm: 28,
+    bestTime: 'klo 10–12 — vältä iltapäivän ruuhkaa',
+    bestSeason: 'läpi vuoden',
+    parking: 'ilmainen luolien luona; runsaasti paikkoja',
+    tips: [
+      'Luolavierailu 30 min opastettuna + 30–60 min vulkanismikeskus',
+      'Yhdistä Véu da Noivan, Seixalin ja Porto Mozin pohjoisrannikon reissuun',
+      'Englanninkielinen opastus saatavilla'
+    ],
+    warnings: ['Luolissa kylmää ~16 °C — ota villapaita', 'Matalia kohtia — klaustrofobialle hankalaa'],
+    pkgs: ['A', 'B'],
+  },
+  {
+    id: 'boaventura',
+    name: 'Boaventuran kylä',
+    pt: 'Boaventura',
+    type: 'village',
+    lat: 32.8201, lon: -16.9514,
+    desc: 'Pieni rauhallinen vuoristokylä pohjoisrannikolla. Santa Quitéria -kirkko, kauniit näköalat Atlantille. São Cristóvão -näköalapaikka tarjoaa laakson valokuvauskulman.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 45, durationText: '30–45 min',
+    driveMin: 50, driveKm: 38,
+    bestTime: 'iltapäivä (laakson valaistus)',
+    bestSeason: 'läpi vuoden',
+    parking: 'ilmainen kadunvarsi',
+    tips: [
+      'Pysähdys São Vicente–Santana -ajossa pohjoisrannikolla',
+      'Lyhyt pysähdys 30–45 min — ei pääkohde',
+      'São Cristóvão -näköalapaikka paras kuvauskulma'
+    ],
+    warnings: [],
+    pkgs: ['B'],
+  },
+  {
+    id: 'ponta-do-sol',
+    name: 'Ponta do Sol',
+    pt: 'Ponta do Sol',
+    type: 'village',
+    lat: 32.6789, lon: -17.1014,
+    desc: 'Madeiran aurinkoisin kunta etelärannikolla, kahden jyrkän kallion välissä. Värikkäät talot, kivinen ranta, 1800-luvun silta ja Nossa Senhora da Luz -kirkko. Rento ilmapiiri, paljon kahviloita.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 90, durationText: '1,5 h',
+    driveMin: 25, driveKm: 24,
+    bestTime: 'iltapäivä ja auringonlasku',
+    bestSeason: 'läpi vuoden — kesäkuussa erinomainen',
+    parking: 'helppo, ilmainen tunneliparkki rantapromenadilla',
+    tips: [
+      'Yhdistä Cascata dos Anjos -vesiputoukseen',
+      'John Dos Passos -kahvila historiallinen pysähdys',
+      'Auringonlasku rantapromenadilta upea'
+    ],
+    warnings: [],
+    pkgs: ['A', 'C'],
+  },
+  {
+    id: 'cascata-anjos',
+    name: 'Cascata dos Anjos',
+    pt: 'Cascata dos Anjos',
+    type: 'waterfall',
+    lat: 32.6876, lon: -17.1156,
+    desc: 'Dramaattinen vesiputous, joka putoaa suoraan vanhalle ER101-rannikkotielle. Voit ajaa tai kävellä putouksen alta — ilmaiseen autopesuun. Yksi Madeiran ikonisimmista valokuvauspaikoista.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 30, durationText: '20–30 min',
+    driveMin: 30, driveKm: 25,
+    bestTime: 'aamu ennen klo 11 tai myöhään iltapäivällä',
+    bestSeason: 'läpi vuoden; kesäkuussa virtaus vaatimaton',
+    parking: 'vaikea — kapea tienvarsi vanhalla ER101:llä',
+    tips: [
+      'Aja vanhalle ER101:lle Ponta do Solin liittymästä',
+      'Pidä auton ikkunat suljettuna jos ajat alta',
+      'Yhdistä Ponta do Soliin samaan retkeen'
+    ],
+    warnings: ['Kivivyöryjä esiintyy putouksen vieressä', 'Tie kapea ja kuoppainen — varovaisuus'],
+    pkgs: ['A', 'C'],
+  },
+  {
+    id: 'lombinho',
+    name: 'Cascata do Lombinho',
+    pt: 'Cascata do Lombinho (Ribeira da Janela)',
+    type: 'waterfall',
+    lat: 32.847, lon: -17.1614,
+    desc: 'Vesiputous, joka putoaa basaltti-kynnyksen yli vanhalle ER101-tielle Ribeira da Janelassa, lähellä Porto Mozia. Vähemmän tunnettu kuin Cascata dos Anjos, samaa tyyppiä.',
+    price: 0, priceNote: 'ilmainen',
+    duration: 20, durationText: '15–20 min',
+    driveMin: 80, driveKm: 52,
+    bestTime: 'milloin tahansa',
+    bestSeason: 'läpi vuoden, virtaus suurin sateiden jälkeen',
+    parking: 'kadunvarsi vanhalla ER101:llä',
+    tips: [
+      'Lähellä Porto Mozia ja Seixalia — helppo yhdistää',
+      'Lyhyt pysähdys — 15–20 min riittää'
+    ],
+    warnings: ['Virtaus vaihtelee voimakkaasti sateen mukaan'],
+    pkgs: ['B'],
+  },
+  {
+    id: 'risco',
+    name: 'Riscon vesiputous',
+    pt: 'Cascata do Risco (PR6.1)',
+    type: 'waterfall',
+    lat: 32.7589, lon: -17.1356,
+    desc: '100 m korkea vesiputous, joka putoaa pystysuoralta kalliolta sumun verhoamaan luolaan. Helppo levada-polku Casa do Rabaçalista. Useimmiten yhdistetään 25 Fontesin reittiin.',
+    price: 3, priceNote: '3 € (SIMplifica-varaus)',
+    duration: 90, durationText: '1,5 h',
+    driveMin: 60, driveKm: 45,
+    hikeKm: 3, difficulty: 'helppo',
+    bestTime: 'aamu',
+    bestSeason: 'kevät–kesäkuu virtaus suurin',
+    parking: 'Rabaçalin parkki + shuttlebussi 5 € meno-paluu',
+    tips: [
+      'Yhdistä 25 Fontesiin SAMAAN aikaikkunaan — molemmat Rabaçalista',
+      'Polku märkä ja liukas — kunnon kengät'
+    ],
+    warnings: ['Polku voi olla suljettu kovan sateen jälkeen'],
+    pkgs: ['B'],
+  },
+  {
+    id: 'dolphins',
+    name: 'Delfiini- ja valassafari',
+    pt: 'Passeio de Golfinhos e Baleias',
+    type: 'boat',
+    lat: 32.6481, lon: -16.9075,
+    desc: 'Funchalin satamasta lähtevät 3 h kierrokset. 95 % onnistumisaste delfiinien/valaiden nähtävyydessä. Vaihtoehtoina nopea RIB-vene tai mukava katamaraani uintipysähdyksellä.',
+    price: 45, priceNote: '35–80 € (RIB halvempi, katamaraani kalliimpi)',
+    duration: 180, durationText: '3 h',
+    driveMin: 0, driveKm: 0,
+    bestTime: 'aamupassi 10–13 — rauhallisin meri',
+    bestSeason: 'touko–elokuu — kesäkuussa erinomainen kausi',
+    parking: 'Funchalin sataman parkkihallit',
+    tips: [
+      'Parhaat operaattorit: VipDolphins (katamaraani, max 17 hlö), Rota dos Cetáceos (eettinen), Sea Emotions (RIB nopea)',
+      'Aamupasseilla paras onnistumistilastot',
+      'Varaa etukäteen kesäkuussa — paikkoja menee nopeasti',
+      'Pahoinvointitabletti 30 min ennen jos arkuutta',
+      'Aurinkovoide, hattu, tuulipusero (avomerellä viileämpi)'
+    ],
+    warnings: ['Vältä operaattoreita jotka mainostavat "uimista delfiinien kanssa" — epäeettistä', 'Sääriippuvainen — peruuntumisia tuulisina päivinä'],
+    pkgs: ['A', 'B', 'C'],
+  },
+  {
+    id: 'doca-cavacas',
+    name: 'Doca do Cavacasin altaat',
+    pt: 'Doca do Cavacas / Poças do Gomes',
+    type: 'pool',
+    lat: 32.6361, lon: -16.9408,
+    desc: 'Pieni vulkaaninen uimakompleksi Funchalin länsipuolella, Lidon ja Praia Formosan välissä. Kolme erilaista allasta. Näkymä Cabo Girãoon. Lähellä Funchalia.',
+    price: 5, priceNote: '5 € (viimeinen tunti 2,90 €)',
+    duration: 120, durationText: '2 h',
+    driveMin: 10, driveKm: 4,
+    bestTime: 'aamu tai myöhään iltapäivällä',
+    bestSeason: 'touko–lokakuu',
+    parking: 'promenadilta portaat alas; vähän paikkoja',
+    tips: [
+      'Halvempi vaihtoehto Porto Mozille ja lähellä Funchalia',
+      'Aurinkotuolit ja varjot vuokrattavissa 2–4 €',
+      'Yhdistä Praia Formosan kanssa kävelyretkenä'
+    ],
+    warnings: ['Aallot voivat tulla altaisiin myrskyisellä säällä', 'Liukas kallio — vesikengät'],
+    pkgs: ['A', 'C'],
+  },
+  {
+    id: 'praia-formosa',
+    name: 'Praia Formosan ranta',
+    pt: 'Praia Formosa',
+    type: 'beach',
+    lat: 32.6356, lon: -16.9408,
+    desc: 'Funchalin suurin julkinen ranta, 2 km musta-harmaa kivirantaa. Ravintoloita, jalkapallokenttä, leikkipaikka, hengenpelastajat. Madeiran ikoninen "kaupunkiranta".',
+    price: 0, priceNote: 'ilmainen',
+    duration: 120, durationText: '2 h',
+    driveMin: 10, driveKm: 4,
+    bestTime: 'aamu tai myöhään iltapäivällä',
+    bestSeason: 'touko–lokakuu',
+    parking: 'ilmainen "Parque de Estacionamento" rannan vieressä',
+    tips: [
+      'Yhdistä Doca do Cavacasiin — vain 500 m välimatka',
+      'Vesikengät PAKOLLISET (musta kivi polttava ja terävä)',
+      'Aurinkotuolit vuokrattavissa 8–10 €/päivä',
+      'Lido-promenadilta voi kävellä Funchalin keskustaan'
+    ],
+    warnings: ['Aallot voivat olla voimakkaita — tarkista hengenpelastajan lippu', 'Kuumana päivänä kivet polttavat — vesikengät tärkeät'],
+    pkgs: ['A', 'C'],
+  },
+];
+
+/* ============================================================
+   PACKAGES (DAY-BY-DAY)
+   ============================================================ */
+const PACKAGES = {
+  A: {
+    name: 'Klassikko',
+    tagline: 'Madeiran ikoniset kohteet',
+    desc: 'Tasapainoinen reitti, joka kokoaa saaren tärkeimmät elämykset: Pico Arieiron auringonnousu, Monte Palace, Porto Mozin altaat, Santana, delfiinisafari ja pohjoisrannikon dramaattinen luonto.',
+    stats: { drive: '~340 km', hike: '~3 km', cost: '~95 €/hlö' },
+    days: [
+      {
+        n: 1, date: 'La 30.5.', title: 'Saapuminen ja Funchal',
+        stops: [
+          { t: 'Klo 14', id: 'funchal-old', note: 'Lennon jälkeen rauhallinen iltakävely vanhassa kaupungissa. Markkinat jos vielä auki (ma–la 7–14).' },
+        ],
+        notes: 'Tervetuloa Madeiralle! Vältä raskasta ohjelmaa ensimmäisenä päivänä. Illalla illallinen Rua de Santa Marialla.',
+        stats: { drive: '20 km lentoasemalta', hike: '—', energy: 'chill' }
+      },
+      {
+        n: 2, date: 'Su 31.5.', title: 'Länsi-Madeira',
+        stops: [
+          { t: 'Klo 9', id: 'ponta-do-sol', note: 'Aamiainen Ponta do Solin rantapromenadilla.' },
+          { t: 'Klo 11', id: 'cascata-anjos', note: 'Lyhyt pysähdys vesiputouksella.' },
+          { t: 'Klo 13', id: 'porto-moniz', note: 'Lounas Porto Mozissa + uintia luonnonaltaissa.' },
+          { t: 'Klo 16', id: 'veu-da-noiva', note: 'Paluumatkalla nopea pysähdys.' },
+        ],
+        notes: 'Paluu Funchaliin VR1-tietä (1,5 h). Illallinen Lidolla.',
+        stats: { drive: '~125 km', hike: '1 km', energy: 'medium' }
+      },
+      {
+        n: 3, date: 'Ma 1.6.', title: 'Auringonnousu vuorella + Monte',
+        stops: [
+          { t: 'Klo 5', id: 'pico-arieiro', note: 'Lähtö Funchalista. Auringonnousu klo 6:35. Lämpimät vaatteet!' },
+          { t: 'Klo 9', id: 'funchal-old', note: 'Paluu hotellille, aamiainen, lepoa.' },
+          { t: 'Klo 14', id: 'monte-palace', note: 'Köysiradalla ylös, puutarha, kelkat alas.' },
+        ],
+        notes: 'Päivän kohokohta: pilvimeri Pico Arieirolta. Iltapäivällä rento Monte-elämys.',
+        stats: { drive: '~60 km', hike: '0,5 km', energy: 'medium' }
+      },
+      {
+        n: 4, date: 'Ti 2.6.', title: 'Santanan päivä',
+        stops: [
+          { t: 'Klo 10', id: 'santana', note: 'Perinnetalot ja keskusta.' },
+          { t: 'Klo 11', id: 'rocha-navio', note: 'Köysirata rannikolle ja uinti.' },
+          { t: 'Klo 14', id: 'aguage', note: 'Lyhyt patikka vesiputoukselle ennen lounasta.' },
+        ],
+        notes: 'Lounas Quinta do Furão Santanassa — yksi saaren parhaista näköaloista.',
+        stats: { drive: '~100 km', hike: '1 km', energy: 'chill' }
+      },
+      {
+        n: 5, date: 'Ke 3.6.', title: 'Meri ja altaat',
+        stops: [
+          { t: 'Klo 10', id: 'dolphins', note: 'Aamupassi delfiineille (3 h). Varaa etukäteen!' },
+          { t: 'Klo 15', id: 'doca-cavacas', note: 'Uintia ja aurinkoa luonnonaltaissa.' },
+          { t: 'Klo 17', id: 'praia-formosa', note: 'Kävely Lido-promenadia keskustaan.' },
+        ],
+        notes: 'Rennoin päivä. Illalla pizza tai sushi Zona Velhasta.',
+        stats: { drive: '~10 km', hike: '2 km', energy: 'chill' }
+      },
+      {
+        n: 6, date: 'To 4.6.', title: 'Pohjoisrannikko',
+        stops: [
+          { t: 'Klo 7:30', id: 'fanal', note: 'Aikaisin liikkeelle sumun toivossa.' },
+          { t: 'Klo 11', id: 'seixal', note: 'Musta hiekka + altaat.' },
+          { t: 'Klo 14', id: 'sao-vicente', note: 'Luolat ja lounas kylässä.' },
+        ],
+        notes: 'Pohjoisrannikko on Madeiran villein puoli — varaudu nopeisiin säävaihteluihin.',
+        stats: { drive: '~120 km', hike: '2 km', energy: 'medium' }
+      },
+      {
+        n: 7, date: 'Pe 5.6.', title: 'Viimeinen aamu + lähtö',
+        stops: [
+          { t: 'Klo 9', id: 'funchal-old', note: 'Aamukävely markkinoille viimeisille souvenireille.' },
+        ],
+        notes: 'Auton palautus lentokentälle ~2 h ennen lentoa. Vinkki: jos voitte jäädä yön yli, 6.6. lauantaina Atlantic Festivalin ilotulituskilpailun show on legendaarinen.',
+        stats: { drive: '20 km lentoasemalle', hike: '—', energy: 'chill' }
+      },
+    ],
+  },
+  B: {
+    name: 'Luonto',
+    tagline: 'Helpot patikat ja villi luonto',
+    desc: 'Painotus levada-patikoissa ja Madeiran UNESCO-suojellussa luonnossa. Sisältää saaren korkeimman huipun (helpoin reitti), 25 Lähteen patikan ja Fanal-metsän. Aktiivinen mutta ei vaativa.',
+    stats: { drive: '~310 km', hike: '~22 km', cost: '~75 €/hlö' },
+    days: [
+      {
+        n: 1, date: 'La 30.5.', title: 'Saapuminen + Funchal',
+        stops: [
+          { t: 'Klo 16', id: 'funchal-old', note: 'Tutustuminen vanhaan kaupunkiin ennen illallista.' },
+        ],
+        notes: 'Lepää matkasta. Huomenna on pitkä patikkapäivä.',
+        stats: { drive: '20 km lentoasemalta', hike: '—', energy: 'chill' }
+      },
+      {
+        n: 2, date: 'Su 31.5.', title: '25 Lähdettä + Risco (Rabaçal)',
+        stops: [
+          { t: 'Klo 8', id: '25-fontes', note: 'Aikaisin Rabaçaliin. Varaa SIMplifica.com etukäteen!' },
+          { t: 'Klo 12', id: 'risco', note: 'Samalla aikaikkunalla — vain +1,6 km.' },
+        ],
+        notes: 'Madeiran ikoninen levada-päivä. Polku ~11 km + Risco. Ota lounaspaketti ja runsaasti vettä.',
+        stats: { drive: '~90 km', hike: '11 km', energy: 'active' }
+      },
+      {
+        n: 3, date: 'Ma 1.6.', title: 'Auringonnousu + Fanal',
+        stops: [
+          { t: 'Klo 5', id: 'pico-arieiro', note: 'Auringonnousu pilvimerellä.' },
+          { t: 'Klo 9', id: 'fanal', note: 'Vahvistettu sumukausi on talvi, mutta aamulla mahdollisuus.' },
+          { t: 'Klo 13', id: 'porto-moniz', note: 'Lounas + altaat matkalla takaisin.' },
+        ],
+        notes: 'Pitkä mutta upea päivä — vuoresta UNESCO-metsään ja luonnonaltaisiin.',
+        stats: { drive: '~140 km', hike: '2 km', energy: 'active' }
+      },
+      {
+        n: 4, date: 'Ti 2.6.', title: 'Pico Ruivo (Madeiran katto)',
+        stops: [
+          { t: 'Klo 9', id: 'pico-ruivo', note: 'Achada do Teixierasta PR1.2 — 5,6 km, 260 m.' },
+          { t: 'Klo 14', id: 'santana', note: 'Lounas Quinta do Furãossa.' },
+          { t: 'Klo 16', id: 'aguage', note: 'Lyhyt patikka vesiputoukselle.' },
+        ],
+        notes: 'Vältä iltapäivän pilviä — lähde aikaisin. Helppo–keskitaso, ei tarvitse huippukuntoa.',
+        stats: { drive: '~95 km', hike: '6,5 km', energy: 'active' }
+      },
+      {
+        n: 5, date: 'Ke 3.6.', title: 'Pohjoisrannikon altaat',
+        stops: [
+          { t: 'Klo 10', id: 'seixal', note: 'Musta hiekka + uinti.' },
+          { t: 'Klo 13', id: 'lombinho', note: 'Pysähdys vesiputoukselle.' },
+          { t: 'Klo 14', id: 'veu-da-noiva', note: 'Nopea pysähdys.' },
+          { t: 'Klo 15', id: 'sao-vicente', note: 'Luolat ennen paluuta.' },
+        ],
+        notes: 'Lepopäivä jaloille — vain ajoa ja lyhyitä pysähdyksiä.',
+        stats: { drive: '~105 km', hike: '1 km', energy: 'chill' }
+      },
+      {
+        n: 6, date: 'To 4.6.', title: 'São Vicente + Boaventura',
+        stops: [
+          { t: 'Klo 10', id: 'boaventura', note: 'Aamukahvit kylässä, näköalat laaksoon.' },
+          { t: 'Klo 12', id: 'dolphins', note: 'Iltapäivän delfiinisafari Funchalista.' },
+        ],
+        notes: 'Vaihteleva päivä — luonto + meri. Iltapäiväpassi delfiineille.',
+        stats: { drive: '~80 km', hike: '0,5 km', energy: 'medium' }
+      },
+      {
+        n: 7, date: 'Pe 5.6.', title: 'Viimeinen patikka + lähtö',
+        stops: [
+          { t: 'Klo 9', id: 'funchal-old', note: 'Aamukahvit markkinakorttelissa.' },
+        ],
+        notes: 'Jätä viimeinen päivä rennoksi. Auton palautus ~2 h ennen lentoa.',
+        stats: { drive: '20 km lentoasemalle', hike: '1 km', energy: 'chill' }
+      },
+    ],
+  },
+  C: {
+    name: 'Rento',
+    tagline: 'Maisemat, puutarhat ja uinnit',
+    desc: 'Hitain tahti, ei pitkiä patikoita. Painotus näköalapaikoissa, gardens, dolphin watching ja luonnonaltaissa. Ihanteellinen jos haluatte säästää jalkoja ja nauttia rauhassa.',
+    stats: { drive: '~290 km', hike: '~2 km', cost: '~110 €/hlö' },
+    days: [
+      {
+        n: 1, date: 'La 30.5.', title: 'Saapuminen + Funchal',
+        stops: [
+          { t: 'Klo 15', id: 'funchal-old', note: 'Kävely vanhassa kaupungissa, kahvit Rua de Santa Marialla.' },
+        ],
+        notes: 'Rauhallinen ensipäivä. Illallinen Zona Velhassa.',
+        stats: { drive: '20 km lentoasemalta', hike: '—', energy: 'chill' }
+      },
+      {
+        n: 2, date: 'Su 31.5.', title: 'Monte + puutarhat',
+        stops: [
+          { t: 'Klo 10', id: 'monte-palace', note: 'Köysiradalla ylös, puutarha rauhassa.' },
+          { t: 'Klo 14', id: 'funchal-old', note: 'Kelkat alas, lounas keskustassa.' },
+        ],
+        notes: 'Klassinen "Monte-päivä". Iltapäivä rauhallinen — hotellissa altaan ääressä.',
+        stats: { drive: '~10 km', hike: '1 km', energy: 'chill' }
+      },
+      {
+        n: 3, date: 'Ma 1.6.', title: 'Meri ja altaat',
+        stops: [
+          { t: 'Klo 10', id: 'dolphins', note: 'Aamupassi (3 h).' },
+          { t: 'Klo 15', id: 'doca-cavacas', note: 'Uintia ja aurinkoa.' },
+          { t: 'Klo 17', id: 'praia-formosa', note: 'Auringonlasku Lido-promenadilta.' },
+        ],
+        notes: 'Tämä on lomalaisen päivä — ei kiirettä mihinkään.',
+        stats: { drive: '~10 km', hike: '1 km', energy: 'chill' }
+      },
+      {
+        n: 4, date: 'Ti 2.6.', title: 'Länsi-Madeira ajellen',
+        stops: [
+          { t: 'Klo 10', id: 'ponta-do-sol', note: 'Aamukahvi Madeiran aurinkoisimmassa kylässä.' },
+          { t: 'Klo 12', id: 'cascata-anjos', note: 'Pikapysähdys.' },
+          { t: 'Klo 14', id: 'porto-moniz', note: 'Lounas + altaat.' },
+        ],
+        notes: 'Lounasvaihtoehto: Aqua Natura Bay Hotelin terassi Porto Mozissa.',
+        stats: { drive: '~120 km', hike: '0,5 km', energy: 'chill' }
+      },
+      {
+        n: 5, date: 'Ke 3.6.', title: 'Pohjoisrannikko maisemoiden',
+        stops: [
+          { t: 'Klo 10', id: 'seixal', note: 'Lyhyt pysähdys mustalla rannalla.' },
+          { t: 'Klo 12', id: 'veu-da-noiva', note: 'Klassinen kuvauspysähdys.' },
+        ],
+        notes: 'Vain ajoa ja näköaloja. Hidas tahti, ei patikoita.',
+        stats: { drive: '~90 km', hike: '—', energy: 'chill' }
+      },
+      {
+        n: 6, date: 'To 4.6.', title: 'Santana + köysirata',
+        stops: [
+          { t: 'Klo 10', id: 'santana', note: 'Perinnetalot.' },
+          { t: 'Klo 12', id: 'rocha-navio', note: 'Köysirata rannikolle.' },
+        ],
+        notes: 'Lounas Quinta do Furãossa näköalalla. Iltapäivä rauhassa.',
+        stats: { drive: '~80 km', hike: '0,5 km', energy: 'chill' }
+      },
+      {
+        n: 7, date: 'Pe 5.6.', title: 'Pico Arieiro + lähtö',
+        stops: [
+          { t: 'Klo 9', id: 'pico-arieiro', note: 'Pelkkä näköalapaikka — ei kävelyä polulle. Päiväsaikaan vältät kylmän aamun.' },
+        ],
+        notes: 'Viimeinen muisto saaresta. Auton palautus ~2 h ennen lentoa.',
+        stats: { drive: '~60 km', hike: '—', energy: 'chill' }
+      },
+    ],
+  },
+};
+
+/* ============================================================
+   INFO CONTENT
+   ============================================================ */
+const INFO_HTML = `
+<div class="alert alert-info">
+  <span class="alert-icon">🎆</span>
+  <div><strong>Bonus 6.6.2026:</strong> Atlantic Festivalin ilotulituskilpailu (Madeira International Fireworks Competition) starttaa lauantai-iltana. Jos voitte jäädä yön yli, tämä on legendaarinen kokemus.</div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">☁️</span>Sää 30.5.–5.6.2026</h3>
+  <div class="info-block">
+    <div class="weather-grid">
+      <div class="weather-card"><div class="weather-card-icon">🌡️</div><div class="weather-card-val">19–22°C</div><div class="weather-card-lbl">päivä</div></div>
+      <div class="weather-card"><div class="weather-card-icon">🌙</div><div class="weather-card-val">14–18°C</div><div class="weather-card-lbl">yö</div></div>
+      <div class="weather-card"><div class="weather-card-icon">🌊</div><div class="weather-card-val">~20°C</div><div class="weather-card-lbl">meri</div></div>
+      <div class="weather-card"><div class="weather-card-icon">🌅</div><div class="weather-card-val">06:35</div><div class="weather-card-lbl">aurinko nousee</div></div>
+      <div class="weather-card"><div class="weather-card-icon">🌇</div><div class="weather-card-val">20:55</div><div class="weather-card-lbl">aurinko laskee</div></div>
+      <div class="weather-card"><div class="weather-card-icon">☔</div><div class="weather-card-val">~14 mm</div><div class="weather-card-lbl">kk. sade</div></div>
+    </div>
+  </div>
+  <div class="info-block">
+    <h4>Etelä vs. pohjoinen</h4>
+    <p>Funchalin etelärannikolla on tyypillisesti 3–6 °C lämpimämpää ja kuivempaa kuin Porto Mozin pohjoisrannikolla. Pohjoispuolelle ottakaa tuulitakki tai kevyt fleece mukaan vaikka Funchalissa olisi t-paitasää.</p>
+  </div>
+  <div class="info-block">
+    <h4>Sumu vuoristossa</h4>
+    <p>Pico Arieiron auringonnousu vaatii kirkkaan aamun — tarkista <strong>webcam-madeira.com</strong> ennen klo 5:00 lähtöä. Jos pilviraja on yli 1500 m, kannattaa lähteä; muuten siirtäkää toiselle päivälle.</p>
+  </div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">🚗</span>Vuokra-auto</h3>
+  <div class="info-block">
+    <h4>Suositellut yritykset (Funchalin lentokenttä FNC)</h4>
+    <table>
+      <thead><tr><th>Yritys</th><th>Arvio</th><th>Kommentti</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Madeira Rent</strong></td><td>★★★★ 8/10</td><td>Ammattimainen, uudet autot, reilu vakuutus</td></tr>
+        <tr><td><strong>Centauro</strong></td><td>★★★★ Hyvä</td><td>Luotettava, varo aggressiivista vakuutusmyyntiä</td></tr>
+        <tr><td><strong>Rodavante</strong></td><td>★★★★ 9/10</td><td>Paikallinen, vanhempaa kalustoa, hidas paperityö</td></tr>
+        <tr><td>Goldcar</td><td>★★ 6/10</td><td>Halvin mutta paljon valituksia — vältä</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="info-block">
+    <h4>Budjetti viikolle 30.5.–5.6.</h4>
+    <ul>
+      <li>Pieni bensiiniauto, manuaali: <strong>~200–280 €</strong></li>
+      <li>Sama, automaatti: <strong>~250–350 €</strong></li>
+      <li>Full Coverage Discovercarsista: <strong>+6–10 €/päivä</strong> (paljon halvempi kuin tiskillä)</li>
+      <li>Polttoaine viikossa: <strong>~80–100 €</strong> (bensa ~1,65 €/l, diesel ~1,92 €/l)</li>
+    </ul>
+  </div>
+  <div class="info-block">
+    <h4>Käytännön vinkit</h4>
+    <ul>
+      <li><strong>EI tietulleja</strong> Madeiralla — älä osta toll-laitetta</li>
+      <li>Suomen EU-ajokortti riittää, kansainvälistä ei tarvita</li>
+      <li>Vaadi <strong>full-to-full</strong> polttoainepolitiikka — ota kuvat mittarista</li>
+      <li>Älä osta vakuutusta tiskillä jos Discovercars-Full Coverage on jo</li>
+      <li><strong>Automaatti suositeltava</strong> mäkien takia, mutta manuaalilla pärjää</li>
+    </ul>
+  </div>
+  <div class="link-list" style="margin-top:1rem">
+    <a class="link-row" href="https://www.discovercars.com/portugal/madeira/fnc" target="_blank" rel="noopener">
+      <span>Vertailu Discovercars.com</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
+    </a>
+    <a class="link-row" href="https://madeirarent.com" target="_blank" rel="noopener">
+      <span>Madeira Rent (suora)</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>
+    </a>
+  </div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">🛣️</span>Ajaminen ja pysäköinti</h3>
+  <div class="info-block">
+    <h4>Tienlaatu ja nopeusrajoitukset</h4>
+    <ul>
+      <li><strong>VR1</strong> (etelärannikon nopeustie): 2+2-kaistainen, 100 km/h</li>
+      <li><strong>ER-tiet</strong> (regionaali): kapeampia, mäkisiä, 80 km/h</li>
+      <li>Taajamissa <strong>50 km/h</strong></li>
+      <li>Tunneleissa 70–80 km/h, ajovalot päälle aina, ei ohittamista</li>
+    </ul>
+  </div>
+  <div class="info-block">
+    <h4>Funchalin parkkihallit</h4>
+    <table>
+      <thead><tr><th>Halli</th><th>Hinta</th><th>Huomiot</th></tr></thead>
+      <tbody>
+        <tr><td><strong>La Vie</strong></td><td>0,60 €/h<br>5,80 €/päivä</td><td>Halvin, Pingo Doce -ostoksilla 1 h ilmainen</td></tr>
+        <tr><td><strong>Almirante Reis</strong></td><td>1,40 €/h<br>~10 €/päivä</td><td>Iso, luotettava, kortit toimivat</td></tr>
+        <tr><td>Marina Shopping</td><td>~1 €/h</td><td>Satama lähellä</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <div><strong>Älä luota Google Mapsin "lyhin reitti" -ehdotukseen</strong> Madeiralla — toisinaan ohjaa kapeille vanhoille teille. Käytä asetusta "vältä kapeita teitä" jos saatavilla.</div>
+  </div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">🏨</span>Majoitus Funchalissa</h3>
+  <div class="info-block">
+    <h4>Parhaat kaupunginosat</h4>
+    <ul>
+      <li><strong>Zona Velha / Old Town</strong> — atmosfääri, ravintolat kävelyetäisyydellä, suositus pariskunnalle (3-4* ~120–180 €/yö)</li>
+      <li><strong>Lido / São Martinho</strong> — modernit resort-hotellit, allaspromenade, bussit keskustaan (~216 €/yö 4*)</li>
+      <li><strong>Sé / keskusta</strong> — boutique-hotellit, kaikki kävellen (~100–200 €/yö)</li>
+    </ul>
+  </div>
+  <div class="info-block">
+    <h4>Yöpyminen muualla?</h4>
+    <p>Voitte säästää aikaa yöpymällä Porto Mozissa tai Santanassa yhden yön — pohjoisrannikon aamut ennen turistibusseja ovat maagisia. Mutta jos haluatte pysyä yksinkertaisessa rutiinissa, 7 yötä Funchal toimii hyvin.</p>
+  </div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">🍽️</span>Ravintolasuosituksia</h3>
+  <div class="info-block">
+    <ul>
+      <li><strong>Zona Velha:</strong> Armazém do Sal · O Tasco · Tasca Literária Dona Joana</li>
+      <li><strong>Funchal sentralo:</strong> Akua (kala) · The Snug · Doca do Cavacas (rantaterassi)</li>
+      <li><strong>Santana:</strong> Quinta do Furão (näköala, paras lounas pohjoisessa)</li>
+      <li><strong>Ponta do Sol:</strong> John Dos Passos -kahvila (kahvi + leivos historiallisessa miljöössä)</li>
+      <li><strong>Porto Moniz:</strong> Cachalote (ranta-altaan vieressä)</li>
+    </ul>
+  </div>
+  <div class="info-block">
+    <h4>Maistettavaa</h4>
+    <p><strong>Espetada</strong> (laavakivellä grillattu nauta) · <strong>Bolo do caco</strong> (paikallisleipä valkosipulivoilla) · <strong>Lapas</strong> (paistetut limpetit) · <strong>Poncha</strong> (rommi-mehu paikalliskäännöksellä) · <strong>Madeira-viini</strong> (sweet/dry, vanhentunut puutynnyreissä)</p>
+  </div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">📱</span>Hyödyllisiä sovelluksia</h3>
+  <div class="info-block">
+    <ul>
+      <li><strong>Bolt</strong> — Madeiran ainoa toimiva ride-hail (Uber ei toimi). Kentältä Funchaliin ~25–30 €.</li>
+      <li><strong>Webcam Madeira</strong> — tarkista vuoriston pilvet ennen sunrise-lähtöä</li>
+      <li><strong>SIMplifica.com</strong> — patikkareittien varaukset (pakollinen 2026)</li>
+      <li><strong>Google Maps offline</strong> — lataa Madeiran kartat ennen lähtöä</li>
+      <li><strong>EU-roaming</strong> toimii — datakulut samat kuin kotona</li>
+    </ul>
+  </div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">🆘</span>Tärkeät numerot</h3>
+  <div class="info-block">
+    <ul>
+      <li><strong>112</strong> — yleinen hätänumero</li>
+      <li><strong>+351 291 700 700</strong> — Funchalin sairaala</li>
+      <li><strong>+351 291 208 200</strong> — turistipoliisi</li>
+      <li><strong>+358 9 1605 5555</strong> — Suomen Lissabonin suurlähetystö (Funchalissa ei konsulaattia)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="info-section">
+  <h3 class="info-section-title"><span class="info-section-emoji">💸</span>Pikabudjetti pariskunta / viikko</h3>
+  <div class="info-block">
+    <table>
+      <tbody>
+        <tr><td>Lennot 2× (Finnair HEL–FNC)</td><td><strong>1 040–1 600 €</strong></td></tr>
+        <tr><td>Hotelli 6 yötä 3–4★ Funchal</td><td><strong>750–1 100 €</strong></td></tr>
+        <tr><td>Vuokra-auto + vakuutus + bensa</td><td><strong>300–450 €</strong></td></tr>
+        <tr><td>Pääsymaksut (paketti A ~95 €/hlö)</td><td><strong>190 €</strong></td></tr>
+        <tr><td>Ruoka (lounaat + illalliset)</td><td><strong>400–700 €</strong></td></tr>
+        <tr><td>Aktiviteetit (delfiinit, köysiradat)</td><td><strong>100–180 €</strong></td></tr>
+        <tr><td><strong>Yhteensä</strong></td><td><strong>~2 800–4 200 €</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<p style="text-align:center; color: var(--text-3); font-size: var(--fs-xs); margin-top: var(--s-8);">
+  Tiedot kerätty 2026 lähteistä. Tarkista hinnat ja aukioloajat ennen matkaa.<br>
+  Hyvää matkaa! 🌴
+</p>
+`;
+
+/* ============================================================
+   STATE & ELEMENTS
+   ============================================================ */
+const state = {
+  view: 'list',
+  filter: 'all',
+  search: '',
+  pkg: 'A',
+  favorites: JSON.parse(localStorage.getItem('madeira-favs') || '[]'),
+};
+
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+
+/* ============================================================
+   RENDER: LIST CARDS
+   ============================================================ */
+function renderList() {
+  const grid = $('#cardGrid');
+  const meta = $('#resultsMeta');
+  const empty = $('#emptyState');
+  const banner = $('#pkgBanner');
+  const bannerText = $('#pkgBannerText');
+  const statPlaces = $('#statPlaces');
+  statPlaces.textContent = PLACES.length;
+
+  let items = PLACES.slice();
+
+  // filter by package
+  if (state.filter === 'fav') {
+    items = items.filter(p => state.favorites.includes(p.id));
+  } else if (state.filter !== 'all') {
+    items = items.filter(p => p.pkgs.includes(state.filter));
+  }
+
+  // filter by search
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    items = items.filter(p => {
+      const txt = `${p.name} ${p.pt} ${TYPES[p.type].fi} ${p.desc} ${(p.tips||[]).join(' ')}`.toLowerCase();
+      return txt.includes(q);
+    });
+  }
+
+  // banner
+  if (state.filter === 'A' || state.filter === 'B' || state.filter === 'C') {
+    banner.classList.add('visible');
+    const pkg = PACKAGES[state.filter];
+    bannerText.innerHTML = `<strong>${pkg.name}-paketti:</strong> ${pkg.tagline}.`;
+  } else {
+    banner.classList.remove('visible');
+  }
+
+  // render
+  if (!items.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    meta.textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+  meta.textContent = `${items.length} paikkaa${state.search ? ` — haku: "${state.search}"` : ''}`;
+
+  grid.innerHTML = items.map(p => {
+    const t = TYPES[p.type];
+    const fav = state.favorites.includes(p.id);
+    return `
+      <article class="card" data-id="${p.id}" role="listitem" tabindex="0">
+        <div class="card-img" style="--type-bg: ${t.color}">
+          <span class="card-emoji" aria-hidden="true">${t.emoji}</span>
+          <span class="card-type-chip">${t.fi}</span>
+          <button class="card-fav ${fav ? 'active' : ''}" data-fav="${p.id}" aria-label="${fav ? 'Poista suosikeista' : 'Lisää suosikkeihin'}">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">${p.name}</h3>
+          <div class="card-sub">${p.pt}</div>
+          <p class="card-desc">${p.desc}</p>
+          <div class="card-stats">
+            <span class="card-stat" title="Vierailun kesto">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              ${p.durationText}
+            </span>
+            <span class="card-stat" title="Ajomatka Funchalista">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14M5 17l1.5-4.5h11L19 17M7 7h10l1 4H6z"/></svg>
+              ${p.driveMin}min · ${p.driveKm}km
+            </span>
+            <span class="card-stat" title="Pääsymaksu">
+              ${p.price === 0 ? '🆓 ilmainen' : `💶 ${p.priceNote}`}
+            </span>
+            <span class="card-pkg-tags">${p.pkgs.map(pk => `<span class="pkg-tag" title="${PACKAGES[pk].name}">${pk}</span>`).join('')}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+/* ============================================================
+   RENDER: DETAIL PANEL
+   ============================================================ */
+function openPanel(id) {
+  const p = PLACES.find(x => x.id === id);
+  if (!p) return;
+  const t = TYPES[p.type];
+  const fav = state.favorites.includes(p.id);
+
+  $('#panelContent').innerHTML = `
+    <div class="panel-hero" style="background: ${t.color}">
+      <span class="panel-hero-emoji" aria-hidden="true">${t.emoji}</span>
+    </div>
+    <div class="panel-body">
+      <h2 class="panel-title" id="panel-title">${p.name}</h2>
+      <p class="panel-subtitle">${t.fi} · ${p.pt}</p>
+      <p class="panel-desc">${p.desc}</p>
+
+      <div class="panel-stats-grid">
+        <div class="panel-stat">
+          <div class="panel-stat-lbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Kesto
+          </div>
+          <div class="panel-stat-val">${p.durationText}</div>
+        </div>
+        <div class="panel-stat">
+          <div class="panel-stat-lbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14M5 17l1.5-4.5h11L19 17M7 7h10l1 4H6z"/></svg>
+            Funchalista
+          </div>
+          <div class="panel-stat-val">${p.driveMin} min · ${p.driveKm} km</div>
+        </div>
+        <div class="panel-stat">
+          <div class="panel-stat-lbl">💶 Hinta</div>
+          <div class="panel-stat-val">${p.priceNote}</div>
+        </div>
+        <div class="panel-stat">
+          <div class="panel-stat-lbl">📅 Paras kausi</div>
+          <div class="panel-stat-val" style="font-size: var(--fs-sm); font-weight: 500;">${p.bestSeason}</div>
+        </div>
+        <div class="panel-stat" style="grid-column: 1 / -1;">
+          <div class="panel-stat-lbl">⏰ Paras aika</div>
+          <div class="panel-stat-val" style="font-size: var(--fs-sm); font-weight: 500;">${p.bestTime}</div>
+        </div>
+        ${p.hikeKm ? `
+        <div class="panel-stat" style="grid-column: 1 / -1;">
+          <div class="panel-stat-lbl">🥾 Patikka</div>
+          <div class="panel-stat-val" style="font-size: var(--fs-sm); font-weight: 500;">${p.hikeKm} km · ${p.difficulty}</div>
+        </div>` : ''}
+        <div class="panel-stat" style="grid-column: 1 / -1;">
+          <div class="panel-stat-lbl">🅿️ Pysäköinti</div>
+          <div class="panel-stat-val" style="font-size: var(--fs-sm); font-weight: 500;">${p.parking}</div>
+        </div>
+      </div>
+
+      ${p.tips && p.tips.length ? `
+      <div class="panel-section">
+        <h3 class="panel-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 3 7h7l-5.5 4 2 7-6.5-4-6.5 4 2-7L2 9h7z"/></svg>
+          Vinkit
+        </h3>
+        <ul class="tips-list">
+          ${p.tips.map(t => `<li>${t}</li>`).join('')}
+        </ul>
+      </div>` : ''}
+
+      ${p.warnings && p.warnings.length ? `
+      <div class="panel-section">
+        <h3 class="panel-section-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          Huomioitavaa
+        </h3>
+        <ul class="warn-list">
+          ${p.warnings.map(w => `<li>${w}</li>`).join('')}
+        </ul>
+      </div>` : ''}
+
+      <div class="panel-actions">
+        <button class="btn" data-panel-fav="${p.id}">
+          <svg viewBox="0 0 24 24" fill="${fav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          ${fav ? 'Suosikeissa' : 'Suosikkeihin'}
+        </button>
+        <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}&travelmode=driving" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Avaa Google Mapsissa
+        </a>
+      </div>
+    </div>
+  `;
+
+  $('#panel').classList.add('open');
+  $('#panelBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  $('#panel').focus();
+}
+
+function closePanel() {
+  $('#panel').classList.remove('open');
+  $('#panelBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ============================================================
+   RENDER: PACKAGE DAYS
+   ============================================================ */
+function renderPackage() {
+  const pkg = PACKAGES[state.pkg];
+  const container = $('#pkgContent');
+
+  container.innerHTML = `
+    <div class="pkg-summary">
+      <div class="pkg-summary-tag">Paketti ${state.pkg}</div>
+      <h2 class="pkg-summary-title">${pkg.name}</h2>
+      <p class="pkg-summary-desc">${pkg.desc}</p>
+      <div class="pkg-summary-stats">
+        <div class="pkg-summary-stat"><div class="pkg-summary-stat-val">${pkg.stats.drive}</div><div class="pkg-summary-stat-lbl">ajoa</div></div>
+        <div class="pkg-summary-stat"><div class="pkg-summary-stat-val">${pkg.stats.hike}</div><div class="pkg-summary-stat-lbl">patikkaa</div></div>
+        <div class="pkg-summary-stat"><div class="pkg-summary-stat-val">${pkg.stats.cost}</div><div class="pkg-summary-stat-lbl">pääsymaksut</div></div>
+      </div>
+    </div>
+    ${pkg.days.map(d => renderDay(d)).join('')}
+  `;
+}
+
+function renderDay(d) {
+  const energyLabel = { chill: '😌 Rento', medium: '🚶 Normaali', active: '⚡ Aktiivinen' };
+  return `
+    <article class="day-card">
+      <span class="day-card-num">${d.n}</span>
+      <div class="day-card-date">${d.date}</div>
+      <h3 class="day-card-title">${d.title}</h3>
+      <div class="day-card-stops">
+        ${d.stops.map(s => {
+          const p = PLACES.find(x => x.id === s.id);
+          if (!p) return '';
+          const t = TYPES[p.type];
+          return `
+          <button class="day-stop" data-id="${p.id}">
+            <span class="day-stop-time">${s.t}</span>
+            <span class="day-stop-emoji">${t.emoji}</span>
+            <span class="day-stop-content">
+              <span class="day-stop-name">${p.name}</span>
+              <span class="day-stop-meta">${s.note}</span>
+            </span>
+            <span class="day-stop-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></span>
+          </button>`;
+        }).join('')}
+      </div>
+      ${d.notes ? `<div class="day-card-notes"><strong>Huom:</strong> ${d.notes}</div>` : ''}
+      <div class="day-card-stats">
+        <span class="day-card-stat">🚗 <strong>${d.stats.drive}</strong></span>
+        <span class="day-card-stat">🥾 <strong>${d.stats.hike}</strong></span>
+        <span class="day-card-stat">${energyLabel[d.stats.energy]}</span>
+      </div>
+    </article>
+  `;
+}
+
+/* ============================================================
+   RENDER: INFO
+   ============================================================ */
+function renderInfo() {
+  $('#infoContent').innerHTML = INFO_HTML;
+}
+
+/* ============================================================
+   MAP
+   ============================================================ */
+let map, markersLayer;
+function initMap() {
+  if (map) return;
+  map = L.map('map', { zoomControl: true, attributionControl: true })
+         .setView([32.75, -17.00], 10);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18
+  }).addTo(map);
+
+  markersLayer = L.layerGroup().addTo(map);
+  refreshMapMarkers();
+}
+
+function refreshMapMarkers() {
+  if (!markersLayer) return;
+  markersLayer.clearLayers();
+  PLACES.forEach(p => {
+    if (state.filter !== 'all' && state.filter !== 'fav' && !p.pkgs.includes(state.filter)) return;
+    if (state.filter === 'fav' && !state.favorites.includes(p.id)) return;
+    const t = TYPES[p.type];
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="map-pin"><div class="map-pin-bg" style="--pin-color: ${t.color}"></div><div class="map-pin-emoji">${t.emoji}</div></div>`,
+      iconSize: [32, 40],
+      iconAnchor: [16, 40],
+      popupAnchor: [0, -38]
+    });
+    const m = L.marker([p.lat, p.lon], { icon }).addTo(markersLayer);
+    m.bindPopup(`
+      <div class="popup-title">${p.name}</div>
+      <div class="popup-meta">${t.fi} · ${p.driveMin}min Funchalista · ${p.priceNote}</div>
+      <a class="popup-link" data-popup-id="${p.id}">Avaa tiedot →</a>
+    `);
+  });
+}
+
+/* ============================================================
+   THEME
+   ============================================================ */
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.dataset.theme = saved;
+  } else {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+  }
+}
+function toggleTheme() {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('theme', next);
+}
+
+/* ============================================================
+   VIEW SWITCHING
+   ============================================================ */
+function showView(v) {
+  state.view = v;
+  $$('.view').forEach(el => el.classList.toggle('active', el.id === `view-${v}`));
+  $$('.nav-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
+  if (v === 'map') {
+    setTimeout(() => { initMap(); map && map.invalidateSize(); }, 100);
+  } else if (v === 'days') {
+    renderPackage();
+  } else if (v === 'info') {
+    renderInfo();
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+/* ============================================================
+   FAVORITES
+   ============================================================ */
+function toggleFav(id) {
+  const idx = state.favorites.indexOf(id);
+  if (idx > -1) state.favorites.splice(idx, 1);
+  else state.favorites.push(id);
+  localStorage.setItem('madeira-favs', JSON.stringify(state.favorites));
+}
+
+/* ============================================================
+   EVENT WIRING
+   ============================================================ */
+function init() {
+  initTheme();
+  renderList();
+
+  // Theme
+  $('#themeToggle').addEventListener('click', toggleTheme);
+
+  // Search
+  const search = $('#search');
+  const clear = $('#searchClear');
+  search.addEventListener('input', e => {
+    state.search = e.target.value.trim();
+    clear.classList.toggle('visible', !!state.search);
+    renderList();
+  });
+  clear.addEventListener('click', () => {
+    search.value = '';
+    state.search = '';
+    clear.classList.remove('visible');
+    renderList();
+    search.focus();
+  });
+
+  // Filter chips
+  $$('.chip').forEach(c => {
+    c.addEventListener('click', () => {
+      state.filter = c.dataset.filter;
+      $$('.chip').forEach(x => x.setAttribute('aria-pressed', x === c));
+      renderList();
+      refreshMapMarkers();
+    });
+  });
+
+  // Package banner
+  $('#pkgBannerGo').addEventListener('click', () => {
+    if (state.filter === 'A' || state.filter === 'B' || state.filter === 'C') {
+      state.pkg = state.filter;
+      $$('.pkg-tab').forEach(t => t.setAttribute('aria-pressed', t.dataset.pkg === state.pkg));
+    }
+    showView('days');
+  });
+
+  // Card grid (delegation)
+  $('#cardGrid').addEventListener('click', e => {
+    const fav = e.target.closest('[data-fav]');
+    if (fav) {
+      e.stopPropagation();
+      toggleFav(fav.dataset.fav);
+      renderList();
+      refreshMapMarkers();
+      return;
+    }
+    const card = e.target.closest('.card');
+    if (card) openPanel(card.dataset.id);
+  });
+  $('#cardGrid').addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.card')) {
+      e.preventDefault();
+      openPanel(e.target.dataset.id);
+    }
+  });
+
+  // Panel
+  $('#panelClose').addEventListener('click', closePanel);
+  $('#panelBackdrop').addEventListener('click', closePanel);
+  $('#panel').addEventListener('click', e => {
+    const fav = e.target.closest('[data-panel-fav]');
+    if (fav) {
+      toggleFav(fav.dataset.panelFav);
+      renderList();
+      refreshMapMarkers();
+      openPanel(fav.dataset.panelFav);
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePanel();
+  });
+
+  // Bottom nav
+  $$('.nav-btn').forEach(b => {
+    b.addEventListener('click', () => showView(b.dataset.view));
+  });
+
+  // Package tabs
+  $$('.pkg-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      state.pkg = t.dataset.pkg;
+      $$('.pkg-tab').forEach(x => x.setAttribute('aria-pressed', x === t));
+      renderPackage();
+    });
+  });
+
+  // Day stops delegation
+  document.addEventListener('click', e => {
+    const stop = e.target.closest('.day-stop');
+    if (stop) openPanel(stop.dataset.id);
+    const popupLink = e.target.closest('[data-popup-id]');
+    if (popupLink) openPanel(popupLink.dataset.popupId);
+  });
+
+  // System theme change
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+      document.documentElement.dataset.theme = e.matches ? 'dark' : 'light';
+    }
+  });
+
+  // Swipe to close panel
+  let startX = 0, startY = 0;
+  const panel = $('#panel');
+  panel.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  panel.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (dx > 80 && Math.abs(dx) > Math.abs(dy)) closePanel();
+  }, { passive: true });
+
+  // PWA service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {/* silent — works without SW */});
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
