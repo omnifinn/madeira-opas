@@ -535,6 +535,26 @@ input:focus, select:focus, textarea:focus {
   background:
     radial-gradient(ellipse at top right, rgba(255,255,255,0.18), transparent 60%),
     radial-gradient(ellipse at bottom left, rgba(0,0,0,0.12), transparent 50%);
+  z-index: 1;
+}
+.card-img > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  transition: transform var(--dur-slow) var(--ease-out);
+  background: var(--type-bg, var(--bg-soft));
+}
+.card:hover .card-img > img { transform: scale(1.04); }
+.card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 45%);
+  z-index: 3;
+  pointer-events: none;
 }
 .card-emoji {
   font-size: 56px;
@@ -542,6 +562,7 @@ input:focus, select:focus, textarea:focus {
   z-index: 1;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
 }
+[data-theme="dark"] .card-img > img { filter: brightness(0.94); }
 .card-type-chip {
   position: absolute;
   top: var(--s-3); left: var(--s-3);
@@ -552,8 +573,11 @@ input:focus, select:focus, textarea:focus {
   font-weight: 600;
   border-radius: var(--r-pill);
   letter-spacing: 0.02em;
+  z-index: 4;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
-[data-theme="dark"] .card-type-chip { background: rgba(0,0,0,0.6); color: var(--text); backdrop-filter: blur(8px); }
+[data-theme="dark"] .card-type-chip { background: rgba(0,0,0,0.6); color: var(--text); }
 .card-fav {
   position: absolute;
   top: var(--s-3); right: var(--s-3);
@@ -564,6 +588,7 @@ input:focus, select:focus, textarea:focus {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: transform var(--dur-fast), background var(--dur-fast);
+  z-index: 4;
 }
 [data-theme="dark"] .card-fav { background: rgba(0,0,0,0.5); }
 .card-fav:hover { transform: scale(1.1); }
@@ -689,7 +714,25 @@ input:focus, select:focus, textarea:focus {
   background:
     radial-gradient(ellipse at top right, rgba(255,255,255,0.2), transparent 60%),
     radial-gradient(ellipse at bottom left, rgba(0,0,0,0.18), transparent 50%);
+  z-index: 1;
 }
+.panel-hero > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+.panel-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%);
+  z-index: 3;
+  pointer-events: none;
+}
+[data-theme="dark"] .panel-hero > img { filter: brightness(0.92); }
 .panel-hero-emoji {
   position: relative;
   z-index: 1;
@@ -875,6 +918,80 @@ input:focus, select:focus, textarea:focus {
   display: inline-flex; align-items: center; gap: 4px;
   color: var(--accent); font-weight: 600; font-size: var(--fs-sm);
   cursor: pointer;
+}
+
+/* Map overlay controls */
+.map-close {
+  position: absolute;
+  top: calc(var(--s-3) + 0px);
+  left: var(--s-3);
+  z-index: 1000;
+  width: 42px; height: 42px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  transition: transform var(--dur-fast), background var(--dur-fast);
+}
+.map-close:hover { transform: scale(1.06); background: var(--bg-soft); }
+.map-close:active { transform: scale(0.92); }
+.map-close svg { width: 18px; height: 18px; }
+
+.map-legend {
+  position: absolute;
+  bottom: var(--s-4);
+  left: var(--s-3);
+  right: var(--s-3);
+  z-index: 1000;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-3);
+  max-width: 360px;
+  margin: 0 auto;
+  display: none;
+  font-size: var(--fs-xs);
+}
+.map-legend.visible { display: block; }
+.map-legend-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.map-legend-close {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  color: var(--text-3);
+  display: flex; align-items: center; justify-content: center;
+}
+.map-legend-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.map-legend-day {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-elevated);
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+}
+.map-legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid white;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
 }
 
 /* Custom map markers */
@@ -1394,7 +1511,21 @@ input:focus, select:focus, textarea:focus {
   <!-- MAP VIEW -->
   <section class="view" id="view-map" aria-labelledby="map-h">
     <h2 id="map-h" class="sr-only">Kartta</h2>
-    <div id="map"></div>
+    <div style="position: relative;">
+      <button class="map-close" id="mapClose" aria-label="Sulje kartta ja palaa listaan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div id="map"></div>
+      <div class="map-legend" id="mapLegend">
+        <div class="map-legend-title">
+          <span id="mapLegendTitle">Suositeltu ajoreitti</span>
+          <button class="map-legend-close" id="mapLegendClose" aria-label="Piilota selitys">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 6-12 12M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="map-legend-days" id="mapLegendDays"></div>
+      </div>
+    </div>
   </section>
 
   <!-- DAYS VIEW -->
@@ -2413,6 +2544,7 @@ function renderList() {
     return `
       <article class="card" data-id="${p.id}" role="listitem" tabindex="0">
         <div class="card-img" style="--type-bg: ${t.color}">
+          <img src="images/${p.id}.webp" alt="${p.name}" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <span class="card-emoji" aria-hidden="true">${t.emoji}</span>
           <span class="card-type-chip">${t.fi}</span>
           <button class="card-fav ${fav ? 'active' : ''}" data-fav="${p.id}" aria-label="${fav ? 'Poista suosikeista' : 'Lisää suosikkeihin'}">
@@ -2454,6 +2586,7 @@ function openPanel(id) {
 
   $('#panelContent').innerHTML = `
     <div class="panel-hero" style="background: ${t.color}">
+      <img src="images/${p.id}.webp" alt="${p.name}" decoding="async" onerror="this.style.display='none'">
       <span class="panel-hero-emoji" aria-hidden="true">${t.emoji}</span>
     </div>
     <div class="panel-body">
@@ -2612,19 +2745,27 @@ function renderInfo() {
 /* ============================================================
    MAP
    ============================================================ */
-let map, markersLayer;
+const DAY_COLORS = ['#FF6B6B', '#FFA94D', '#FCC419', '#51CF66', '#22B8CF', '#845EF7', '#F06595'];
+const FUNCHAL = { lat: 32.6479, lon: -16.9081 };
+const routeCache = {}; // key: pkg|day -> geojson coords
+
+let map, markersLayer, routesLayer;
+
 function initMap() {
   if (map) return;
-  map = L.map('map', { zoomControl: true, attributionControl: true })
+  map = L.map('map', { zoomControl: false, attributionControl: true })
          .setView([32.75, -17.00], 10);
+  L.control.zoom({ position: 'topright' }).addTo(map);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     maxZoom: 18
   }).addTo(map);
 
+  routesLayer = L.layerGroup().addTo(map);
   markersLayer = L.layerGroup().addTo(map);
   refreshMapMarkers();
+  refreshMapRoutes();
 }
 
 function refreshMapMarkers() {
@@ -2648,6 +2789,107 @@ function refreshMapMarkers() {
       <a class="popup-link" data-popup-id="${p.id}">Avaa tiedot →</a>
     `);
   });
+}
+
+function getDayWaypoints(day) {
+  // build [Funchal, ...stops, Funchal] coord list (skip Funchal if already)
+  const coords = [];
+  const isFunchal = id => id === 'funchal-old';
+  const stops = day.stops.map(s => PLACES.find(p => p.id === s.id)).filter(Boolean);
+  if (!stops.length) return [];
+  if (!isFunchal(stops[0].id)) coords.push([FUNCHAL.lat, FUNCHAL.lon]);
+  stops.forEach(p => coords.push([p.lat, p.lon]));
+  if (!isFunchal(stops[stops.length - 1].id)) coords.push([FUNCHAL.lat, FUNCHAL.lon]);
+  return coords;
+}
+
+async function fetchOSRMRoute(coords) {
+  // coords: [[lat,lon], ...]; OSRM wants lon,lat;lon,lat
+  if (coords.length < 2) return null;
+  const path = coords.map(c => `${c[1]},${c[0]}`).join(';');
+  const url = `https://router.project-osrm.org/route/v1/driving/${path}?overview=full&geometries=geojson`;
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    const data = await r.json();
+    if (!data.routes || !data.routes.length) return null;
+    return {
+      latlngs: data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]),
+      distance: data.routes[0].distance,
+      duration: data.routes[0].duration
+    };
+  } catch (e) { return null; }
+}
+
+async function refreshMapRoutes() {
+  if (!routesLayer) return;
+  routesLayer.clearLayers();
+  const legend = document.getElementById('mapLegend');
+  const legendDays = document.getElementById('mapLegendDays');
+  const legendTitle = document.getElementById('mapLegendTitle');
+
+  // Only show routes when a specific package is selected
+  if (!['A','B','C'].includes(state.filter)) {
+    legend.classList.remove('visible');
+    return;
+  }
+
+  const pkg = PACKAGES[state.filter];
+  legendTitle.textContent = `Reitti · Paketti ${state.filter} (${pkg.name})`;
+  legendDays.innerHTML = pkg.days.map((d, i) =>
+    `<span class="map-legend-day"><span class="map-legend-dot" style="background:${DAY_COLORS[i]}"></span>Päivä ${d.n}</span>`
+  ).join('');
+  legend.classList.add('visible');
+
+  // Draw straight-line previews first so something appears immediately
+  pkg.days.forEach((d, i) => {
+    const coords = getDayWaypoints(d);
+    if (coords.length < 2) return;
+    const color = DAY_COLORS[i] || '#999';
+    const cacheKey = `${state.filter}-${d.n}`;
+    if (routeCache[cacheKey]) {
+      drawRoute(routeCache[cacheKey].latlngs, color, d, routeCache[cacheKey]);
+    } else {
+      // dashed straight-line placeholder
+      const ph = L.polyline(coords, {
+        color, weight: 3, opacity: 0.55, dashArray: '6, 8'
+      }).addTo(routesLayer);
+      ph._isPlaceholder = true;
+      ph._cacheKey = cacheKey;
+      // fetch real route in background
+      fetchOSRMRoute(coords).then(route => {
+        if (!route) return;
+        routeCache[cacheKey] = route;
+        if (state.view !== 'map' || state.filter !== state.filter) return;
+        routesLayer.removeLayer(ph);
+        drawRoute(route.latlngs, color, d, route);
+      });
+    }
+  });
+
+  // Fit map to route bounds after a moment
+  setTimeout(() => {
+    if (state.view !== 'map') return;
+    const allCoords = [];
+    pkg.days.forEach(d => allCoords.push(...getDayWaypoints(d)));
+    if (allCoords.length) {
+      map.fitBounds(L.latLngBounds(allCoords).pad(0.1), { animate: true });
+    }
+  }, 400);
+}
+
+function drawRoute(latlngs, color, day, route) {
+  // shadow line (white underlay for contrast)
+  L.polyline(latlngs, { color: 'white', weight: 6, opacity: 0.6 }).addTo(routesLayer);
+  // colored line
+  const line = L.polyline(latlngs, { color, weight: 4, opacity: 0.9 }).addTo(routesLayer);
+  const distance = route ? `${Math.round(route.distance/1000)} km` : '';
+  const duration = route ? `${Math.round(route.duration/60)} min ajoa` : '';
+  line.bindPopup(`
+    <div class="popup-title">Päivä ${day.n}: ${day.title}</div>
+    <div class="popup-meta">${day.date} · ${distance} · ${duration}</div>
+    <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">${day.stops.length} pysähdystä</div>
+  `);
 }
 
 /* ============================================================
@@ -2728,7 +2970,14 @@ function init() {
       $$('.chip').forEach(x => x.setAttribute('aria-pressed', x === c));
       renderList();
       refreshMapMarkers();
+      refreshMapRoutes();
     });
+  });
+
+  // Map close button → back to list
+  $('#mapClose').addEventListener('click', () => showView('list'));
+  $('#mapLegendClose').addEventListener('click', () => {
+    $('#mapLegend').classList.remove('visible');
   });
 
   // Package banner

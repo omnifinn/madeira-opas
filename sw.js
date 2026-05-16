@@ -1,12 +1,19 @@
 // Madeira-opas service worker
 // Cache-first strategy with network fallback for offline support
-const CACHE = 'madeira-v2';
+const CACHE = 'madeira-v3';
+const PLACE_IDS = [
+  'funchal-old','monte-palace','pico-arieiro','pico-ruivo','porto-moniz',
+  'seixal','veu-da-noiva','fanal','25-fontes','santana','rocha-navio',
+  'sao-vicente','boaventura','ponta-do-sol','cascata-anjos','lombinho',
+  'risco','dolphins','doca-cavacas','praia-formosa'
+];
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  ...PLACE_IDS.map(id => `./images/${id}.webp`)
 ];
 
 self.addEventListener('install', e => {
@@ -32,8 +39,12 @@ self.addEventListener('fetch', e => {
     caches.match(req).then(cached => {
       if (cached) return cached;
       return fetch(req).then(resp => {
-        // Cache map tiles and assets on the fly
-        if (resp && resp.status === 200 && (req.url.includes('tile.openstreetmap.org') || req.url.includes('unpkg.com'))) {
+        // Cache map tiles, OSRM routes, and CDN assets on the fly
+        if (resp && resp.status === 200 && (
+            req.url.includes('tile.openstreetmap.org') ||
+            req.url.includes('unpkg.com') ||
+            req.url.includes('router.project-osrm.org')
+        )) {
           const clone = resp.clone();
           caches.open(CACHE).then(c => c.put(req, clone));
         }
